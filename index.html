@@ -1,0 +1,4194 @@
+<!doctype html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-0BYM6SwdUnjDlcHYCsAAGRks8lwUp4bBUunuMrRmFRM='; style-src 'sha256-WZsU6eBwZ05AgTDj+8LZ/AYI/Lncj9TqhJx/YZa9AfM='; worker-src blob:; img-src data:; connect-src 'none'; font-src 'none'; frame-src 'none'; object-src 'none'; media-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#0e171d">
+<title>Simpanan Lawas</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230e171d'/%3E%3Cpath d='M9 7v18' stroke='%23e3ad3f' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='11' r='3' fill='%23e3ad3f'/%3E%3Cpath d='M16 11h9M16 21h9' stroke='%239db0ba' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='21' r='3' fill='%23e3ad3f'/%3E%3C/svg%3E">
+<style>/* Simpanan Lawas — gaya. Tanpa font eksternal: memakai huruf bawaan perangkat. */
+
+:root {
+  --bg: #0e171d;
+  --bg-2: #15222a;
+  --bg-3: #1d2f3a;
+  --line: #2b3f4c;
+  --text: #e9e6dd;
+  --muted: #a3b5bf;
+  --accent: #e3ad3f;       /* kunyit: isian tombol dan titik garis waktu */
+  --accent-text: #f0c261;  /* kunyit untuk teks di atas gelap */
+  --accent-ink: #1b1403;
+  --danger: #f08a82;
+  --danger-line: #7a3b37;
+  --ok: #86cfa3;
+  --focus: #8fd3ff;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Noto Serif", "Droid Serif", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Roboto Mono", monospace;
+  --radius: 12px;
+  --gutter: 16px;
+  --spine: 5.4rem;
+}
+
+:root[data-theme="light"] {
+  --bg: #eef2f4;
+  --bg-2: #ffffff;
+  --bg-3: #e1e9ee;
+  --line: #c3d0d8;
+  --text: #14212a;
+  --muted: #465b67;
+  --accent: #e3ad3f;
+  --accent-text: #7d4f00;
+  --accent-ink: #1b1403;
+  --danger: #a3261d;
+  --danger-line: #d49a95;
+  --ok: #1f6b3e;
+  --focus: #0b63ce;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.55 var(--sans);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 .5rem; font-weight: 700; }
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.05rem; }
+p { margin: 0 0 .75rem; }
+a { color: var(--accent-text); }
+em { font-style: normal; font-weight: 600; }
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+[tabindex="-1"]:focus { outline: none; }
+
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+.drop:focus-within label.btn, .tool-block:focus-within label.btn { outline: 3px solid var(--focus); outline-offset: 2px; }
+.skip { position: absolute; left: -999px; top: 0; background: var(--accent); color: var(--accent-ink); padding: .5rem 1rem; z-index: 100; }
+.skip:focus { left: 0; }
+[hidden] { display: none !important; }
+
+/* ---------- kerangka ---------- */
+.top {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: max(12px, env(safe-area-inset-top)) var(--gutter) 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+.brand h1 { font-size: 1.3rem; margin: 0; letter-spacing: .01em; }
+.tagline { margin: 0; color: var(--muted); font-size: .85rem; }
+.top-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+main { max-width: 46rem; margin: 0 auto; padding: 20px var(--gutter) 24px; }
+.has-pager main { padding-bottom: 120px; }
+.screen > * + * { margin-top: 1rem; }
+.hero { font-size: 1.75rem; line-height: 1.15; letter-spacing: -.005em; max-width: 22ch; }
+.lead { color: var(--muted); max-width: 60ch; }
+.hint { color: var(--muted); font-size: .88rem; margin: 0; }
+.error-text { color: var(--danger); }
+.status { font-size: 1.05rem; word-break: break-word; }
+
+.foot { max-width: 46rem; margin: 0 auto; padding: 8px var(--gutter) 32px; color: var(--muted); font-size: .85rem; }
+.foot p { margin-bottom: .75rem; }
+
+/* ---------- tombol & input ---------- */
+.btn {
+  appearance: none; -webkit-appearance: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+  min-height: 48px; padding: .55rem 1.1rem;
+  border: 1px solid var(--line); border-radius: 10px;
+  background: var(--bg-3); color: var(--text);
+  font: 600 1rem/1.2 var(--sans); text-align: center; text-decoration: none;
+  cursor: pointer; touch-action: manipulation;
+}
+.btn:hover { border-color: var(--muted); }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.06); }
+.btn.danger { background: transparent; border-color: var(--danger-line); color: var(--danger); }
+.btn.ghost { background: transparent; }
+.btn.small { min-height: 44px; padding: .4rem .85rem; font-size: .92rem; }
+.btn.big { min-height: 60px; font-size: 1.1rem; width: 100%; }
+.btn.icon { min-width: 48px; padding: .4rem .5rem; font-size: 1.4rem; }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; transform: none; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: .75rem; min-width: 0; }
+.field > span { font-size: .88rem; color: var(--muted); }
+input[type="search"], input[type="date"], input[type="number"], select, textarea {
+  width: 100%; min-width: 0; max-width: 100%; min-height: 48px; padding: .5rem .75rem;
+  background: var(--bg-2); color: var(--text);
+  border: 1px solid var(--line); border-radius: 10px;
+  font: 1rem var(--sans);
+}
+select { appearance: auto; }
+textarea { font-family: var(--mono); font-size: .9rem; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.check { display: flex; gap: 12px; align-items: flex-start; min-height: 44px; padding: .5rem 0; cursor: pointer; }
+.check input { width: 22px; height: 22px; margin: 2px 0 0; flex-shrink: 0; accent-color: var(--accent); }
+
+/* ---------- kotak info ---------- */
+.note { border: 1px solid var(--line); background: var(--bg-2); border-radius: var(--radius); padding: .9rem 1rem; }
+.note h3 { margin-bottom: .25rem; }
+.note p:last-child { margin-bottom: 0; }
+.note.error { border-color: var(--danger-line); }
+.note.error > :first-child { color: var(--danger); }
+.note.warn { border-color: var(--accent); }
+.note.accent { border-color: var(--accent); }
+.note .row { margin-top: .75rem; }
+
+.drop { display: grid; gap: .6rem; padding: 1rem; border: 2px dashed var(--line); border-radius: var(--radius); text-align: center; }
+.drop.over { border-color: var(--accent); background: var(--bg-2); }
+.demo-box { padding: .25rem 0; }
+
+.fold { border-top: 1px solid var(--line); padding-top: .25rem; }
+.fold > summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+.fold > summary::after { content: "+"; margin-left: auto; padding-left: 1rem; font-size: 1.4rem; font-weight: 400; color: var(--muted); }
+.fold[open] > summary::after { content: "\2212"; }
+.fold > summary::-webkit-details-marker { display: none; }
+.fold[open] > summary { margin-bottom: .5rem; }
+.steps, .plain { padding-left: 1.2rem; margin: 0 0 .5rem; }
+.steps li, .plain li { margin-bottom: .5rem; }
+
+.bar { height: 6px; border-radius: 4px; background: var(--bg-3); overflow: hidden; }
+.bar-fill { height: 100%; width: 35%; background: var(--accent); border-radius: 4px; animation: slide 1.4s ease-in-out infinite; }
+@keyframes slide { 0% { margin-left: -35%; } 100% { margin-left: 100%; } }
+@media (prefers-reduced-motion: reduce) { .bar-fill { animation: none; width: 100%; } }
+
+/* ---------- pilih bagian ---------- */
+.pick-list { display: grid; gap: 10px; }
+.pick { display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-2); cursor: pointer; }
+.pick:has(input:checked) { border-color: var(--accent); }
+.pick.disabled { opacity: .6; cursor: default; }
+.pick input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--accent); }
+.pick .name { font-weight: 600; word-break: break-word; }
+.pick .meta { color: var(--muted); font-size: .88rem; margin-top: .2rem; }
+.pick .sample { font-family: var(--mono); font-size: .78rem; color: var(--muted); margin-top: .35rem; word-break: break-all; }
+.tag { display: inline-block; font-size: .78rem; font-weight: 700; padding: .1rem .5rem; border-radius: 999px; border: 1px solid var(--line); margin-right: .4rem; }
+.tag.favorite { border-color: var(--accent); color: var(--accent-text); }
+.tag.liked, .tag.history { border-color: var(--muted); }
+.sticky-actions { position: sticky; bottom: 0; padding: .75rem 0; background: linear-gradient(to top, var(--bg) 70%, transparent); }
+.outline { max-height: 22rem; overflow: auto; background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; padding: .75rem; font: .78rem/1.45 var(--mono); white-space: pre; margin: .5rem 0 0; }
+
+/* ---------- daftar ---------- */
+.list-head h2 { margin-bottom: .25rem; }
+.sections { color: var(--muted); font-size: .88rem; margin: 0; word-break: break-word; }
+.badge { display: inline-block; font-size: .78rem; font-weight: 700; padding: .15rem .6rem; border-radius: 6px; margin: 0 0 .4rem; }
+.badge.demo { background: var(--accent); color: var(--accent-ink); }
+.controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: .5rem; }
+.controls > *, .screen > * { min-width: 0; }
+.summary { font-family: var(--serif); font-size: 1.1rem; margin: .25rem 0 0; }
+
+.cards { list-style: none; margin: 1rem 0 0; padding: 0; }
+.card, .divider {
+  display: grid; grid-template-columns: var(--spine) 1fr;
+  background: linear-gradient(var(--line), var(--line)) calc(var(--spine) - 1px) 0 / 2px 100% no-repeat;
+}
+.card { padding: .35rem 0; }
+.spine { position: relative; text-align: right; padding: .75rem .95rem 0 0; font-family: var(--serif); font-variant-numeric: tabular-nums; }
+.spine::after {
+  content: ""; position: absolute; right: -6px; top: 1.05rem; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 4px var(--bg);
+}
+.card.undated .spine::after { background: var(--bg-3); border: 2px solid var(--muted); width: 12px; height: 12px; }
+.spine .day { display: block; font-size: 1.9rem; line-height: 1; font-weight: 700; }
+.spine .my { display: block; white-space: nowrap; font-size: .8rem; color: var(--muted); margin-top: .2rem; font-family: var(--sans); }
+.spine .tm { display: block; font-size: .72rem; color: var(--muted); font-family: var(--sans); }
+.spine .nodate { display: block; font-size: .72rem; color: var(--muted); font-family: var(--sans); line-height: 1.25; }
+.spine .filepos { display: block; font-size: 1.1rem; font-weight: 700; }
+.spine .filepos-label { display: block; font-size: .7rem; color: var(--muted); font-family: var(--sans); line-height: 1.2; }
+
+.card-body { margin-left: 1.1rem; padding: .8rem .95rem; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); min-width: 0; }
+.card-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .6rem; margin: 0 0 .25rem; font-weight: 700; word-break: break-word; }
+.rank { margin-left: auto; font-size: .78rem; color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
+.card-desc { margin: 0 0 .4rem; word-break: break-word; }
+.card-meta { margin: 0 0 .4rem; font: .8rem/1.4 var(--mono); color: var(--muted); word-break: break-all; white-space: pre-line; }
+.card-warn { margin: 0 0 .5rem; font-size: .88rem; color: var(--danger); word-break: break-word; }
+.pill { display: inline-block; font: 600 .72rem/1 var(--sans); padding: .25rem .5rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.pill.dup { border-color: var(--accent); color: var(--accent-text); }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: .6rem; }
+.actions .open { grid-column: 1 / -1; }
+.actions .btn { min-height: 46px; width: 100%; }
+.has-pager .foot { padding-bottom: 140px; }
+.summary-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+.btn.mark[aria-pressed="true"] { border-color: var(--accent); color: var(--accent-text); }
+
+.divider .spine { padding: .2rem .95rem 0 0; }
+.divider .spine::after { display: none; }
+.divider .label { margin-left: 1.1rem; padding: .9rem 0 .25rem; font-family: var(--serif); font-size: 1.05rem; font-weight: 700; color: var(--accent-text); }
+.divider .label span { color: var(--muted); font-weight: 500; }
+
+/* ---------- pager ---------- */
+.pager {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  display: flex; justify-content: center; align-items: center; gap: 8px;
+  padding: 10px var(--gutter) max(10px, env(safe-area-inset-bottom));
+  background: var(--bg); border-top: 1px solid var(--line);
+}
+.pg-jump { display: flex; align-items: center; gap: 6px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; min-width: 0; }
+.pg-jump input { width: 5.2rem; text-align: center; font-weight: 700; padding: .4rem .3rem; }
+
+/* ---------- dialog & toast ---------- */
+dialog { width: min(92vw, 34rem); max-height: 88vh; overflow: auto; background: var(--bg-2); color: var(--text); border: 1px solid var(--line); border-radius: 16px; padding: 1.2rem; }
+dialog::backdrop { background: rgba(0, 0, 0, .6); }
+dialog > * + * { margin-top: .75rem; }
+dialog h3 { margin: 1rem 0 .15rem; }
+dialog p { margin-bottom: .25rem; }
+.stat-grid { display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; margin: 0; }
+.stat-grid dt { color: var(--muted); }
+.stat-grid dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.fail-list { list-style: none; margin: .5rem 0 0; padding: 0; max-height: 16rem; overflow: auto; font: .78rem/1.4 var(--mono); }
+.fail-list li { padding: .35rem 0; border-top: 1px solid var(--line); word-break: break-all; }
+.fail-list b { color: var(--danger); font-family: var(--sans); }
+
+.toast {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(86px + env(safe-area-inset-bottom)); z-index: 60;
+  max-width: min(90vw, 30rem); background: var(--text); color: var(--bg); padding: .7rem 1rem; border-radius: 10px; font-weight: 600; text-align: center;
+}
+
+@media (min-width: 600px) {
+  .hero { font-size: 2.2rem; }
+  .actions { display: flex; flex-wrap: wrap; }
+  .actions .open { flex: 1 1 auto; }
+  .actions .btn { width: auto; }
+}
+@media (max-width: 380px) {
+  .two { grid-template-columns: minmax(0, 1fr); }
+  .pager { gap: 4px; padding-left: 8px; padding-right: 8px; }
+  .pager .btn.icon { min-width: 44px; padding: 0; font-size: 1.3rem; }
+  .pg-jump input { width: 3.6rem; padding: .4rem .1rem; }
+  :root { --spine: 4.7rem; }
+  .card-body { margin-left: .9rem; padding: .7rem .75rem; }
+  .spine .day { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Lewati ke isi</a>
+
+<header class="top">
+  <div class="brand">
+    <h1 id="app-title">Simpanan Lawas</h1>
+    <p class="tagline">Baca video tersimpan dari yang paling lama</p>
+  </div>
+  <div class="top-actions">
+    <button id="btn-theme" class="btn small ghost" type="button" aria-label="Ganti tema terang atau gelap">Tema</button>
+    <button id="btn-privacy" class="btn small ghost" type="button">Privasi</button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- MULAI -->
+  <section id="screen-start" class="screen" aria-labelledby="h-start">
+    <h2 id="h-start" class="hero" tabindex="-1">Baca simpananmu, mulai dari yang paling lama disimpan</h2>
+    <p class="lead">Pilih file ekspor data TikTok-mu. Daftar video Favorit tampil per halaman, lengkap dengan tanggal disimpan, jadi kamu tidak perlu menggulir ribuan video di TikTok.</p>
+
+    <div id="start-error" class="note error" role="alert" hidden></div>
+
+    <div id="saved-banner" class="note accent" hidden>
+      <p id="saved-banner-text"></p>
+      <div class="row">
+        <button id="btn-open-saved" class="btn primary" type="button">Buka daftar tersimpan</button>
+        <button id="btn-delete-saved" class="btn danger" type="button">Hapus daftar tersimpan</button>
+      </div>
+    </div>
+
+    <div id="dropzone" class="drop">
+      <label class="btn primary big" for="file-input">Pilih file ekspor (.json atau .zip)</label>
+      <input id="file-input" class="visually-hidden" type="file" accept=".json,.zip,application/json,application/zip,application/x-zip-compressed">
+      <p class="hint">Tidak ada yang diunggah. Tidak diminta password, cookie, atau login TikTok.</p>
+    </div>
+
+    <div class="note">
+      <h3>Isi file ekspor</h3>
+      <p>File ekspor berisi <strong>daftar tautan</strong> (dan tanggal, bila ada), bukan salinan videonya. Video yang sudah dihapus atau dijadikan privat tidak bisa dipulihkan; tautannya akan gagal dibuka di TikTok.</p>
+    </div>
+
+    <div class="note">
+      <h3>File-mu tetap di perangkat ini</h3>
+      <p>Pemrosesan terjadi di browser ini. Tidak ada unggahan, analitik, atau pelacak. TikTok baru dihubungi saat kamu menekan <em>Buka di TikTok</em>.</p>
+    </div>
+
+    <div class="demo-box">
+      <h3>Belum punya file? Coba dulu dengan data fiktif</h3>
+      <div class="row">
+        <button id="btn-demo-small" class="btn" type="button">Demo kecil (300 entri)</button>
+        <button id="btn-demo-big" class="btn" type="button">Demo besar (15.000 entri)</button>
+      </div>
+    </div>
+
+    <details class="fold">
+      <summary>Cara meminta data dari TikTok</summary>
+      <ol class="steps">
+        <li>Di aplikasi TikTok, buka Profil, lalu menu di pojok kanan atas, lalu Pengaturan dan privasi. Cari <strong>Unduh data Anda</strong>: biasanya di bawah Akun, atau di bawah Privasi dan keamanan lalu Personalisasi dan data. Nama dan letak menu berbeda di tiap versi aplikasi.</li>
+        <li>Pilih format <strong>JSON</strong>. Jika kamu tidak yakin kategori mana yang memuat Favorit, pilih <strong>Semua data</strong>; aplikasi ini hanya membaca bagian yang relevan. Jika file terlalu besar untuk HP, coba kategori yang lebih sedikit.</li>
+        <li>Ajukan permintaan dan tunggu sampai siap (dari seketika sampai beberapa hari). Tautan unduhan hanya berlaku beberapa hari, jadi unduh begitu siap.</li>
+        <li>Kembali ke sini dan pilih file hasil unduhan. File .zip tidak perlu diekstrak.</li>
+      </ol>
+    </details>
+
+    <details class="fold">
+      <summary>Batasan yang perlu kamu tahu</summary>
+      <ul class="plain">
+        <li>Aplikasi ini hanya membaca file yang kamu pilih. Ia tidak mengambil Favorit langsung dari akun TikTok.</li>
+        <li>Tidak ada thumbnail, judul, atau nama akun, kecuali memang tertulis di file (biasanya hanya tautan dan tanggal).</li>
+        <li>Tanggal ditampilkan persis seperti tertulis di file; zona waktu tidak diubah.</li>
+        <li>Bagian Favorit, Disukai, dan Riwayat tontonan tidak dicampur kecuali kamu sendiri yang memilih.</li>
+      </ul>
+    </details>
+  </section>
+
+  <!-- MEMPROSES -->
+  <section id="screen-busy" class="screen" aria-labelledby="h-busy" hidden>
+    <h2 id="h-busy" tabindex="-1">Memproses file di perangkatmu</h2>
+    <p id="busy-status" class="status" role="status" aria-live="polite">Menyiapkan…</p>
+    <div class="bar" aria-hidden="true"><div class="bar-fill"></div></div>
+    <p class="hint">Layar tetap bisa digeser. File besar (puluhan MB) bisa memakan waktu beberapa detik.</p>
+    <button id="btn-cancel" class="btn" type="button">Batal</button>
+  </section>
+
+  <!-- PILIH BAGIAN -->
+  <section id="screen-pick" class="screen" aria-labelledby="h-pick" hidden>
+    <h2 id="h-pick" tabindex="-1">Pilih bagian data yang mau dibaca</h2>
+    <p id="pick-intro" class="lead"></p>
+    <div id="pick-warnings"></div>
+    <div id="pick-empty" class="note error" hidden></div>
+    <div id="pick-list" class="pick-list"></div>
+    <details id="pick-more" class="fold" hidden>
+      <summary id="pick-more-summary">Bagian lain (pilih manual)</summary>
+      <p class="hint">Bagian di bawah tidak terlihat seperti daftar video TikTok. Pilih hanya jika kamu tahu isinya.</p>
+      <div id="pick-more-list" class="pick-list"></div>
+    </details>
+    <div id="pick-mix" class="note warn" hidden>
+      <p id="pick-mix-text"></p>
+      <label class="check"><input id="chk-mix" type="checkbox"><span>Saya sengaja menggabungkan bagian-bagian ini</span></label>
+    </div>
+    <div class="row sticky-actions">
+      <button id="btn-pick-go" class="btn primary" type="button" disabled>Tampilkan daftar</button>
+      <button id="btn-pick-back" class="btn" type="button">Pilih file lain</button>
+    </div>
+    <details id="pick-outline" class="fold">
+      <summary>Lihat struktur file (tanpa isi data)</summary>
+      <p class="hint">Hanya nama kunci, jumlah item, dan pola teks. Tidak ada nilai asli. Kamu bisa menyalinnya dan mengirimkannya jika struktur file-mu perlu disesuaikan.</p>
+      <button id="btn-copy-outline" class="btn small" type="button">Salin struktur</button>
+      <pre id="outline-text" class="outline" tabindex="0"></pre>
+    </details>
+  </section>
+
+  <!-- DAFTAR -->
+  <section id="screen-list" class="screen" aria-labelledby="h-list" hidden>
+    <div class="list-head">
+      <h2 id="h-list" tabindex="-1">Video tersimpan</h2>
+      <p id="demo-badge" class="badge demo" hidden>DEMO: data fiktif, tautan tidak nyata</p>
+      <p id="list-sections" class="sections"></p>
+    </div>
+
+    <div id="resume-note" class="note accent" hidden>
+      <p id="resume-text"></p>
+      <button id="btn-resume-reset" class="btn small" type="button">Mulai dari awal</button>
+    </div>
+
+    <div class="controls">
+      <label class="field" for="sel-order">
+        <span>Urutkan</span>
+        <select id="sel-order">
+          <option value="saved-asc">Tanggal DISIMPAN: terlama dulu</option>
+          <option value="saved-desc">Tanggal DISIMPAN: terbaru dulu</option>
+          <option value="file-asc">Urutan dalam file: dari awal</option>
+          <option value="file-desc">Urutan dalam file: dibalik (dari akhir)</option>
+        </select>
+      </label>
+      <p id="order-note" class="hint"></p>
+
+      <details id="filters" class="fold">
+        <summary>Filter dan pencarian</summary>
+        <label class="field" for="inp-search">
+          <span>Cari</span>
+          <input id="inp-search" type="search" inputmode="search" autocomplete="off" placeholder="Tautan, ID video, atau akun (jika ada di file)">
+        </label>
+        <div class="two">
+          <label class="field" for="inp-from"><span>Disimpan dari</span><input id="inp-from" type="date"></label>
+          <label class="field" for="inp-to"><span>Sampai</span><input id="inp-to" type="date"></label>
+        </div>
+        <p id="date-error" class="hint error-text" hidden></p>
+        <label class="field" for="sel-undated">
+          <span>Entri tanpa tanggal</span>
+          <select id="sel-undated">
+            <option value="end">Tampilkan di bagian akhir</option>
+            <option value="hide">Sembunyikan</option>
+            <option value="only">Hanya tampilkan yang tanpa tanggal</option>
+          </select>
+        </label>
+        <label class="check"><input id="chk-dedupe" type="checkbox"><span id="dedupe-label">Sembunyikan duplikat</span></label>
+        <label class="check"><input id="chk-bm" type="checkbox"><span id="bm-label">Hanya yang ditandai</span></label>
+        <label class="field" for="sel-size">
+          <span>Item per halaman</span>
+          <select id="sel-size"><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+        </label>
+        <button id="btn-filter-reset" class="btn small" type="button">Atur ulang filter</button>
+      </details>
+
+      <div class="summary-row">
+        <p id="list-summary" class="summary" role="status" aria-live="polite"></p>
+        <button id="btn-stats" class="btn small" type="button">Rincian impor</button>
+      </div>
+      <p id="list-excluded" class="hint"></p>
+    </div>
+
+    <div id="empty-state" class="note" hidden></div>
+    <ol id="cards" class="cards"></ol>
+
+    <details class="fold tools">
+      <summary>Data dan alat</summary>
+      <div class="tool-block">
+        <label class="check"><input id="chk-save-list" type="checkbox"><span>Simpan daftar ini di perangkat (opsional)</span></label>
+        <p id="save-list-note" class="hint">Jika dinyalakan, daftar disimpan di browser ini (IndexedDB) supaya tidak perlu impor ulang. Siapa pun yang memakai HP dan profil browser ini bisa melihatnya. Matikan untuk menghapusnya.</p>
+      </div>
+      <div class="tool-block">
+        <div class="row">
+          <button id="btn-bm-export" class="btn small" type="button">Ekspor penanda</button>
+          <label class="btn small" for="bm-import">Impor penanda</label>
+          <input id="bm-import" class="visually-hidden" type="file" accept=".json,application/json">
+        </div>
+        <p class="hint">Penanda disimpan di browser ini dan bisa hilang jika data browser dihapus. Ekspor sesekali sebagai cadangan.</p>
+      </div>
+      <div class="tool-block row">
+        <button id="btn-new-file" class="btn small" type="button">Pilih file lain</button>
+      </div>
+    </details>
+
+    <nav id="pager" class="pager" aria-label="Halaman" hidden>
+      <button id="pg-first" class="btn icon" type="button" aria-label="Halaman pertama">«</button>
+      <button id="pg-prev" class="btn icon" type="button" aria-label="Halaman sebelumnya">‹</button>
+      <label class="pg-jump" for="pg-input">
+        <span class="visually-hidden">Nomor halaman</span>
+        <input id="pg-input" type="number" inputmode="numeric" min="1" value="1">
+        <span id="pg-total">/ 1</span>
+      </label>
+      <button id="pg-next" class="btn icon" type="button" aria-label="Halaman berikutnya">›</button>
+      <button id="pg-last" class="btn icon" type="button" aria-label="Halaman terakhir">»</button>
+    </nav>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Bukan produk TikTok dan tidak berafiliasi dengan TikTok maupun ScrollBack. Tanpa server, tanpa pelacak.</p>
+  <button id="btn-wipe" class="btn small danger" type="button">Hapus semua data lokal</button>
+</footer>
+
+<dialog id="dlg-privacy" aria-labelledby="dlg-privacy-title">
+  <h2 id="dlg-privacy-title">Privasi dan keamanan</h2>
+  <h3>File-mu</h3>
+  <p>Dibaca dan diurai di browser ini (dalam Web Worker). Tidak diunggah ke server mana pun. Halaman ini memasang aturan keamanan (CSP) yang melarang koneksi keluar, jadi skripnya tidak bisa mengirim data.</p>
+  <h3>Yang disimpan di perangkat</h3>
+  <p>Pilihan tampilan, penanda, dan posisi terakhir (localStorage). Penanda berisi ID atau alamat video yang kamu tandai. Daftar lengkap hanya disimpan jika kamu menyalakan opsinya (IndexedDB). File mentah tidak pernah disimpan.</p>
+  <h3>Kapan TikTok dihubungi</h3>
+  <p>Hanya saat kamu menekan <em>Buka di TikTok</em>. Tautan dibuka dengan noopener dan noreferrer, dan halaman ini tidak mengirim referrer. Hanya tautan HTTPS ke domain TikTok yang sah yang bisa dibuka.</p>
+  <h3>Yang tidak ada</h3>
+  <p>Analitik, pelacak, cookie, login, dan sumber daya dari CDN saat berjalan.</p>
+  <h3>Tempat halaman ini dihosting</h3>
+  <p>Penyedia hosting bisa melihat bahwa halaman ini dibuka, tetapi tidak isi file-mu karena file tidak pernah dikirim.</p>
+  <div class="row"><button id="btn-privacy-close" class="btn primary" type="button">Tutup</button></div>
+</dialog>
+
+<dialog id="dlg-confirm" aria-labelledby="dlg-confirm-title">
+  <h2 id="dlg-confirm-title">Yakin?</h2>
+  <p id="dlg-confirm-body"></p>
+  <div class="row">
+    <button id="dlg-confirm-ok" class="btn danger" type="button">Ya</button>
+    <button id="dlg-confirm-cancel" class="btn" type="button">Batal</button>
+  </div>
+</dialog>
+
+<dialog id="dlg-stats" aria-labelledby="dlg-stats-title">
+  <h2 id="dlg-stats-title">Rincian impor</h2>
+  <div id="stats-body"></div>
+  <div class="row"><button id="btn-stats-close" class="btn primary" type="button">Tutup</button></div>
+</dialog>
+
+<dialog id="dlg-copy" aria-labelledby="dlg-copy-title">
+  <h2 id="dlg-copy-title">Salin manual</h2>
+  <p>Browser menolak penyalinan otomatis. Tekan lama pada kotak di bawah, lalu pilih Salin.</p>
+  <textarea id="copy-area" rows="4" readonly></textarea>
+  <div class="row"><button id="btn-copy-close" class="btn primary" type="button">Tutup</button></div>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script>/*
+ * url.js — validasi tautan TikTok.
+ *
+ * Aturan (semuanya lewat URL parser bawaan, bukan pencocokan teks):
+ *  - protokol harus https:
+ *  - tidak boleh ada user:password@ di dalam URL
+ *  - tidak boleh ada port khusus
+ *  - hostname harus persis domain TikTok atau subdomain-nya, bukan sekadar
+ *    "mengandung kata tiktok" (tiktok.com.evil.net dan eviltiktok.com ditolak)
+ *
+ * Kalau file ekspor-mu memakai domain TikTok lain dan semua entri ditolak dengan
+ * alasan "domain bukan TikTok", tambahkan domain itu di ALLOWED_DOMAINS di bawah.
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  var ALLOWED_DOMAINS = ['tiktok.com', 'tiktokv.com'];
+
+  var REASONS = {
+    'bukan-teks': 'Tautan bukan teks',
+    'kosong': 'Tautan kosong',
+    'terlalu-panjang': 'Tautan terlalu panjang',
+    'karakter-tidak-valid': 'Tautan mengandung spasi atau karakter kontrol',
+    'bukan-url': 'Bukan URL yang valid',
+    'bukan-https': 'Bukan HTTPS (mis. http:, javascript:, data:)',
+    'berisi-kredensial': 'URL mengandung user:password@',
+    'port-tidak-standar': 'URL memakai port khusus',
+    'domain-bukan-tiktok': 'Domain bukan TikTok',
+    'tanpa-tautan-atau-id': 'Tidak ada tautan maupun ID video',
+    'bukan-objek': 'Item bukan objek/teks yang bisa dibaca'
+  };
+
+  function fail(reason) {
+    return { ok: false, reason: reason };
+  }
+
+  function hostAllowed(host) {
+    for (var i = 0; i < ALLOWED_DOMAINS.length; i++) {
+      var d = ALLOWED_DOMAINS[i];
+      if (host === d || host.slice(-(d.length + 1)) === '.' + d) return true;
+    }
+    return false;
+  }
+
+  // /video/123, /photo/123, /v/123, /v/123.html
+  var ID_RE = /\/(?:video|photo|v)\/(\d{5,30})(?=[\/.]|$)/;
+  var AUTHOR_RE = /^\/@([A-Za-z0-9._-]{1,64})(?=\/|$)/;
+
+  function parseTikTokUrl(input) {
+    if (typeof input !== 'string') return fail('bukan-teks');
+    var s = input.trim();
+    if (!s) return fail('kosong');
+    if (s.length > 2048) return fail('terlalu-panjang');
+    if (/[\u0000-\u001f\u007f\s]/.test(s)) return fail('karakter-tidak-valid');
+    var u;
+    try {
+      u = new URL(s);
+    } catch (e) {
+      return fail('bukan-url');
+    }
+    if (u.protocol !== 'https:') return fail('bukan-https');
+    if (u.username || u.password) return fail('berisi-kredensial');
+    if (u.port) return fail('port-tidak-standar');
+    var host = u.hostname.toLowerCase();
+    if (!hostAllowed(host)) return fail('domain-bukan-tiktok');
+
+    var idMatch = ID_RE.exec(u.pathname);
+    var authorMatch = AUTHOR_RE.exec(u.pathname);
+    var id = idMatch ? idMatch[1] : null;
+    var path = u.pathname.replace(/\/+$/, '');
+    return {
+      ok: true,
+      href: u.href,
+      host: host,
+      id: id,
+      author: authorMatch ? authorMatch[1] : null,
+      // Kunci deduplikasi: ID video bila ada (host berbeda tetap video yang sama),
+      // kalau tidak ada: host + path tanpa query/hash.
+      key: id ? 'id:' + id : 'url:' + host + path
+    };
+  }
+
+  L.url = {
+    ALLOWED_DOMAINS: ALLOWED_DOMAINS,
+    REASONS: REASONS,
+    parseTikTokUrl: parseTikTokUrl,
+    isSafeTikTokUrl: function (s) { return parseTikTokUrl(s).ok; },
+    keyForId: function (id) { return 'id:' + id; }
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * date.js — membaca dan menampilkan tanggal dengan jujur.
+ *
+ * - Tanggal tanpa zona waktu (mis. "2023-01-01 12:00:00") dibaca APA ADANYA dan
+ *   ditampilkan apa adanya (kita pakai getter UTC supaya tidak bergeser oleh zona
+ *   waktu HP). Kita tidak tahu pasti zona waktu yang dipakai TikTok.
+ * - Format yang ambigu (mis. 03/04/2023) TIDAK ditebak: ditandai "tidak valid".
+ * - Tanggal di luar rentang wajar (sebelum 2014 atau lebih dari 1 hari di masa
+ *   depan) ditandai "tidak valid". Tidak ada tanggal yang dikarang.
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  var MIN_TS = Date.UTC(2014, 0, 1);
+  var DAY = 86400000;
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+  var MONTHS_LONG = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+  var ISO_RE = /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2})(?:[.,]\d{1,9})?)?)?\s*(Z|UTC|[+-]\d{2}(?::?\d{2})?)?$/i;
+
+  function pad(n, w) {
+    var s = String(n);
+    while (s.length < (w || 2)) s = '0' + s;
+    return s;
+  }
+
+  function result(state, ts, raw, reason) {
+    return { state: state, ts: ts, raw: raw, reason: reason || null };
+  }
+
+  function rawText(v) {
+    if (typeof v === 'string') return v.length > 80 ? v.slice(0, 80) + '…' : v;
+    try { return String(v).slice(0, 80); } catch (e) { return ''; }
+  }
+
+  function inRange(ts, now) {
+    return ts >= MIN_TS && ts <= now + DAY;
+  }
+
+  function parseDate(v, now) {
+    now = typeof now === 'number' ? now : Date.now();
+    if (v === undefined || v === null) return result('missing', null, null);
+    if (typeof v === 'string' && !v.trim()) return result('missing', null, null);
+    var raw = rawText(v);
+
+    var n = null;
+    if (typeof v === 'number') n = v;
+    else if (typeof v === 'string' && /^\d{10}$|^\d{13}$/.test(v.trim())) n = Number(v.trim());
+    if (n !== null) {
+      if (!isFinite(n)) return result('invalid', null, raw, 'format');
+      var ms = n >= 1e9 && n < 1e11 ? n * 1000 : n >= 1e11 && n < 1e14 ? n : NaN;
+      if (isNaN(ms)) return result('invalid', null, raw, 'format');
+      return inRange(ms, now) ? result('ok', ms, raw) : result('invalid', null, raw, 'rentang');
+    }
+
+    if (typeof v !== 'string') return result('invalid', null, raw, 'format');
+    var m = ISO_RE.exec(v.trim());
+    if (!m) return result('invalid', null, raw, 'format');
+    var y = +m[1], mo = +m[2], d = +m[3];
+    var h = m[4] ? +m[4] : 0, mi = m[5] ? +m[5] : 0, s = m[6] ? +m[6] : 0;
+    if (mo < 1 || mo > 12 || d < 1 || d > 31 || h > 23 || mi > 59 || s > 59) {
+      return result('invalid', null, raw, 'format');
+    }
+    var ts = Date.UTC(y, mo - 1, d, h, mi, s);
+    var chk = new Date(ts);
+    if (chk.getUTCFullYear() !== y || chk.getUTCMonth() !== mo - 1 || chk.getUTCDate() !== d) {
+      return result('invalid', null, raw, 'format'); // mis. 31 Februari
+    }
+    var tz = m[7];
+    if (tz && !/^(Z|UTC)$/i.test(tz)) {
+      var sign = tz.charAt(0) === '-' ? -1 : 1;
+      var digits = tz.slice(1).replace(':', '');
+      var oh = +digits.slice(0, 2), om = digits.length > 2 ? +digits.slice(2, 4) : 0;
+      if (oh > 14 || om > 59) return result('invalid', null, raw, 'format');
+      ts -= sign * (oh * 3600000 + om * 60000);
+    }
+    return inRange(ts, now) ? result('ok', ts, raw) : result('invalid', null, raw, 'rentang');
+  }
+
+  function formatDate(ts) {
+    var d = new Date(ts);
+    return d.getUTCDate() + ' ' + MONTHS[d.getUTCMonth()] + ' ' + d.getUTCFullYear() +
+      ', ' + pad(d.getUTCHours()) + '.' + pad(d.getUTCMinutes());
+  }
+
+  function parts(ts) {
+    var d = new Date(ts);
+    return {
+      day: d.getUTCDate(),
+      month: MONTHS[d.getUTCMonth()],
+      monthLong: MONTHS_LONG[d.getUTCMonth()],
+      year: d.getUTCFullYear(),
+      time: pad(d.getUTCHours()) + '.' + pad(d.getUTCMinutes()),
+      monthKey: d.getUTCFullYear() * 100 + d.getUTCMonth()
+    };
+  }
+
+  // "2022-03-05" (dari <input type=date>) -> awal/akhir hari. Mengembalikan null bila tidak valid.
+  function dayBound(str, endOfDay) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(str || '');
+    if (!m) return null;
+    var y = +m[1], mo = +m[2], d = +m[3];
+    var ts = endOfDay ? Date.UTC(y, mo - 1, d, 23, 59, 59, 999) : Date.UTC(y, mo - 1, d, 0, 0, 0, 0);
+    var chk = new Date(ts);
+    if (chk.getUTCMonth() !== mo - 1) return null;
+    return ts;
+  }
+
+  L.date = {
+    MIN_TS: MIN_TS,
+    parseDate: parseDate,
+    formatDate: formatDate,
+    parts: parts,
+    dayBound: dayBound,
+    monthsLong: MONTHS_LONG
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * zip.js — pembaca ZIP minimal, dijalankan lokal di browser.
+ *
+ * Kenapa buat sendiri, bukan pakai library? Kebutuhannya sempit: baca daftar isi
+ * (central directory) lalu buka beberapa file .json. Pembongkaran deflate memakai
+ * DecompressionStream bawaan browser (Chrome Android 103+). Hasilnya: nol
+ * dependensi, nol CDN, dan kita kontrol penuh batas keamanannya.
+ *
+ * Perlindungan:
+ *  - hanya entri yang kita butuhkan yang dibuka (file lain tidak disentuh)
+ *  - batas ukuran hasil ekstraksi per file, dihitung saat streaming (bukan hanya
+ *    percaya header), plus batas rasio kompresi
+ *  - ukuran sebenarnya harus sama dengan yang dinyatakan ZIP; CRC32 diperiksa
+ *  - ZIP berpassword / multi-disk / metode kompresi aneh ditolak dengan pesan jelas
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  var SIG_EOCD = 0x06054b50, SIG_CEN = 0x02014b50, SIG_LOC = 0x04034b50;
+  var SIG_EOCD64 = 0x06064b50, SIG_LOC64 = 0x07064b50;
+
+  function ZipError(code, message) {
+    var e = new Error(message);
+    e.name = 'ZipError';
+    e.code = code;
+    return e;
+  }
+
+  function u16(b, o) { return b[o] | (b[o + 1] << 8); }
+  function u32(b, o) { return (b[o] | (b[o + 1] << 8) | (b[o + 2] << 16) | (b[o + 3] << 24)) >>> 0; }
+  function u64(b, o) {
+    var lo = u32(b, o), hi = u32(b, o + 4);
+    var v = hi * 4294967296 + lo;
+    if (v > Number.MAX_SAFE_INTEGER) throw ZipError('zip-tidak-valid', 'Ukuran/offset di ZIP terlalu besar atau rusak.');
+    return v;
+  }
+
+  async function readSlice(file, start, end) {
+    return new Uint8Array(await file.slice(start, end).arrayBuffer());
+  }
+
+  var CRC_TABLE = null;
+  function crcTable() {
+    if (CRC_TABLE) return CRC_TABLE;
+    CRC_TABLE = new Uint32Array(256);
+    for (var n = 0; n < 256; n++) {
+      var c = n;
+      for (var k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      CRC_TABLE[n] = c >>> 0;
+    }
+    return CRC_TABLE;
+  }
+  function crc32Update(crc, buf) {
+    var t = crcTable();
+    for (var i = 0; i < buf.length; i++) crc = t[(crc ^ buf[i]) & 0xff] ^ (crc >>> 8);
+    return crc >>> 0;
+  }
+
+  async function listEntries(file, limits) {
+    limits = limits || {};
+    var maxEntries = limits.maxEntries || 50000;
+    var maxCdBytes = limits.maxCentralDirBytes || 64 * 1024 * 1024;
+    var size = file.size;
+    if (size < 22) throw ZipError('zip-tidak-valid', 'File ZIP terlalu kecil atau rusak.');
+
+    var tailLen = Math.min(size, 65535 + 22);
+    var tailStart = size - tailLen;
+    var tail = await readSlice(file, tailStart, size);
+
+    var eocd = -1;
+    for (var i = tail.length - 22; i >= 0; i--) {
+      if (u32(tail, i) === SIG_EOCD && i + 22 + u16(tail, i + 20) === tail.length) { eocd = i; break; }
+    }
+    if (eocd < 0) throw ZipError('zip-tidak-valid', 'Bukan file ZIP yang valid (ujung arsip tidak ditemukan). File mungkin terpotong saat diunduh.');
+
+    var diskNo = u16(tail, eocd + 4), cdDisk = u16(tail, eocd + 6);
+    var total = u16(tail, eocd + 10);
+    var cdSize = u32(tail, eocd + 12);
+    var cdOffset = u32(tail, eocd + 16);
+    if (diskNo !== 0 || cdDisk !== 0) throw ZipError('zip-multidisk', 'ZIP yang terpecah ke beberapa bagian tidak didukung. Gabungkan dulu atau ekstrak di perangkatmu.');
+
+    if (total === 0xffff || cdSize === 0xffffffff || cdOffset === 0xffffffff) {
+      // ZIP64
+      if (eocd < 20 || u32(tail, eocd - 20) !== SIG_LOC64) {
+        throw ZipError('zip-tidak-valid', 'ZIP64 tidak lengkap atau rusak.');
+      }
+      var eocd64Off = u64(tail, eocd - 20 + 8);
+      var rec = await readSlice(file, eocd64Off, eocd64Off + 56);
+      if (rec.length < 56 || u32(rec, 0) !== SIG_EOCD64) throw ZipError('zip-tidak-valid', 'ZIP64 tidak lengkap atau rusak.');
+      total = u64(rec, 32);
+      cdSize = u64(rec, 40);
+      cdOffset = u64(rec, 48);
+    }
+
+    if (total > maxEntries) throw ZipError('zip-terlalu-banyak', 'ZIP berisi terlalu banyak file (' + total + '). Batas: ' + maxEntries + '.');
+    if (cdSize > maxCdBytes) throw ZipError('zip-tidak-valid', 'Daftar isi ZIP tidak wajar besarnya.');
+    if (cdOffset + cdSize > size) throw ZipError('zip-tidak-valid', 'Daftar isi ZIP menunjuk di luar file (rusak).');
+
+    var cd = await readSlice(file, cdOffset, cdOffset + cdSize);
+    var entries = [];
+    var p = 0;
+    var td = new TextDecoder('utf-8');
+    for (var n = 0; n < total; n++) {
+      if (p + 46 > cd.length || u32(cd, p) !== SIG_CEN) throw ZipError('zip-tidak-valid', 'Daftar isi ZIP rusak.');
+      var flags = u16(cd, p + 8), method = u16(cd, p + 10);
+      var crc = u32(cd, p + 16);
+      var compSize = u32(cd, p + 20), usize = u32(cd, p + 24);
+      var nameLen = u16(cd, p + 28), extraLen = u16(cd, p + 30), commentLen = u16(cd, p + 32);
+      var localOffset = u32(cd, p + 42);
+      var nameStart = p + 46;
+      if (nameStart + nameLen + extraLen + commentLen > cd.length) throw ZipError('zip-tidak-valid', 'Daftar isi ZIP rusak.');
+      var name = td.decode(cd.subarray(nameStart, nameStart + nameLen));
+
+      if (compSize === 0xffffffff || usize === 0xffffffff || localOffset === 0xffffffff) {
+        var ex = nameStart + nameLen, exEnd = ex + extraLen;
+        while (ex + 4 <= exEnd) {
+          var id = u16(cd, ex), len = u16(cd, ex + 2);
+          if (id === 0x0001) {
+            var q = ex + 4;
+            if (usize === 0xffffffff) { usize = u64(cd, q); q += 8; }
+            if (compSize === 0xffffffff) { compSize = u64(cd, q); q += 8; }
+            if (localOffset === 0xffffffff) { localOffset = u64(cd, q); q += 8; }
+            break;
+          }
+          ex += 4 + len;
+        }
+      }
+      entries.push({
+        name: name, method: method, flags: flags, crc: crc,
+        compSize: compSize, size: usize, localOffset: localOffset,
+        isDir: name.charAt(name.length - 1) === '/',
+        encrypted: (flags & 1) === 1
+      });
+      p = nameStart + nameLen + extraLen + commentLen;
+    }
+    return entries;
+  }
+
+  /*
+   * Membaca satu entri menjadi teks UTF-8. Melempar ZipError bila ada masalah.
+   * opts: maxBytes, maxRatio, onProgress(bytesSoFar, totalBytes)
+   */
+  async function readEntryText(file, entry, opts) {
+    opts = opts || {};
+    var maxBytes = opts.maxBytes || 250 * 1024 * 1024;
+    var maxRatio = opts.maxRatio || 300;
+
+    if (entry.encrypted) throw ZipError('zip-berpassword', 'File "' + entry.name + '" di dalam ZIP diberi password. ZIP berpassword tidak didukung; ekstrak dulu dengan password lalu pilih file .json-nya.');
+    if (entry.method !== 0 && entry.method !== 8) throw ZipError('zip-metode', 'Metode kompresi ZIP untuk "' + entry.name + '" tidak didukung (kode ' + entry.method + '). Ekstrak dulu di perangkatmu, lalu pilih file .json-nya.');
+    if (entry.size > maxBytes) throw ZipError('zip-terlalu-besar', 'Isi "' + entry.name + '" setelah diekstrak berukuran ' + mb(entry.size) + ', melebihi batas ' + mb(maxBytes) + '.');
+    if (entry.compSize > 0 && entry.size / entry.compSize > maxRatio) throw ZipError('zip-rasio', 'Rasio kompresi "' + entry.name + '" tidak wajar (lebih dari ' + maxRatio + 'x). Arsip ini ditolak demi keamanan.');
+    if (entry.method === 0 && entry.compSize !== entry.size) throw ZipError('zip-tidak-valid', 'Ukuran entri "' + entry.name + '" tidak konsisten (ZIP rusak).');
+    if (entry.method === 8 && typeof DecompressionStream === 'undefined') {
+      throw ZipError('browser-lama', 'Browser ini belum bisa membuka ZIP langsung (butuh Chrome 103 atau lebih baru). Ekstrak ZIP-nya dulu, lalu pilih file .json di dalamnya.');
+    }
+
+    var hdr = await readSlice(file, entry.localOffset, entry.localOffset + 30);
+    if (hdr.length < 30 || u32(hdr, 0) !== SIG_LOC) throw ZipError('zip-tidak-valid', 'Header file "' + entry.name + '" di dalam ZIP rusak.');
+    var dataStart = entry.localOffset + 30 + u16(hdr, 26) + u16(hdr, 28);
+    var dataEnd = dataStart + entry.compSize;
+    if (dataEnd > file.size) throw ZipError('zip-tidak-valid', 'Data "' + entry.name + '" terpotong (ZIP rusak atau belum selesai diunduh).');
+
+    var stream = file.slice(dataStart, dataEnd).stream();
+    if (entry.method === 8) stream = stream.pipeThrough(new DecompressionStream('deflate-raw'));
+
+    var reader = stream.getReader();
+    var dec = new TextDecoder('utf-8');
+    var parts = [];
+    var total = 0, crc = 0xffffffff;
+    var limit = Math.min(maxBytes, entry.size);
+    try {
+      for (;;) {
+        var r;
+        try {
+          r = await reader.read();
+        } catch (e) {
+          throw ZipError('zip-rusak', 'Isi "' + entry.name + '" di dalam ZIP rusak dan tidak bisa dibongkar.');
+        }
+        if (r.done) break;
+        var chunk = r.value;
+        total += chunk.length;
+        if (total > limit) {
+          try { await reader.cancel(); } catch (e2) { /* abaikan */ }
+          throw total > maxBytes
+            ? ZipError('zip-terlalu-besar', 'Isi "' + entry.name + '" melebihi batas ' + mb(maxBytes) + ' saat diekstrak. Arsip ditolak demi keamanan.')
+            : ZipError('zip-ukuran-tidak-cocok', 'Isi "' + entry.name + '" lebih besar daripada yang dinyatakan ZIP (arsip rusak atau tidak aman).');
+        }
+        crc = crc32Update(crc, chunk);
+        parts.push(dec.decode(chunk, { stream: true }));
+        if (opts.onProgress) opts.onProgress(total, entry.size);
+      }
+    } finally {
+      try { reader.releaseLock(); } catch (e3) { /* abaikan */ }
+    }
+    parts.push(dec.decode());
+    if (total !== entry.size) throw ZipError('zip-ukuran-tidak-cocok', 'Ukuran isi "' + entry.name + '" tidak sama dengan yang dinyatakan ZIP (arsip rusak).');
+    if (((crc ^ 0xffffffff) >>> 0) !== entry.crc) throw ZipError('zip-crc', 'Pemeriksaan CRC gagal untuk "' + entry.name + '": isi ZIP rusak. Unduh ulang file ekspor.');
+    var text = parts.join('');
+    if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+    return text;
+  }
+
+  function mb(n) {
+    return (n / 1048576).toFixed(n >= 10485760 ? 0 : 1) + ' MB';
+  }
+
+  L.zip = { listEntries: listEntries, readEntryText: readEntryText, ZipError: ZipError, formatMB: mb };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * extract.js — mencari dan membaca bagian "video tersimpan" dari JSON ekspor TikTok
+ * tanpa mengandalkan satu struktur tertentu.
+ *
+ * Cara kerja:
+ *  1. Telusuri seluruh pohon JSON, cari ARRAY yang isinya terlihat seperti daftar
+ *     video (objek dengan kolom tautan/ID, atau teks berupa URL).
+ *  2. Tiap array jadi "kandidat" bagian data. Kategorinya (Favorit / Disukai /
+ *     Riwayat tontonan / lainnya) ditebak dari nama kunci di jalurnya. Tebakan ini
+ *     hanya saran — pengguna yang memutuskan bagian mana yang dipakai.
+ *  3. Setiap item dibaca lewat fieldsOf(), yang mengenali nama kolom secara
+ *     longgar (Link/link/VideoLink/url..., Date/Time/FavoriteDate...).
+ *
+ * Prinsip: tidak ada nilai yang dikarang. Tanggal "posting" (create_time dsb.)
+ * sengaja TIDAK dipakai untuk mengurutkan karena yang dicari adalah tanggal disimpan.
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+  var U = function () { return L.url; };
+  var D = function () { return L.date; };
+
+  var MAX_DEPTH = 16;
+  var MAX_NODES = 4000000;
+  var SAMPLE = 60;
+
+  function norm(k) { return String(k).toLowerCase().replace(/[^a-z0-9]/g, ''); }
+
+  var LINK_EXACT = /^(?:video|share)?(?:link|url|href|uri)$/;
+  var LINK_LOOSE = /link|url|href/;
+  var DATE_SPECIFIC = [
+    /^(?:favou?rite|favou?rited|save|saved|collect|collected|added|add)(?:date|time|timestamp|at|on)$/,
+    /^(?:date|time)(?:added|saved|favou?rited|collected)$/
+  ];
+  var DATE_PLAIN = /^(?:date|time|timestamp|datetime|dateandtime)$/;
+  var DATE_POSTED = /create|post|publish|upload|birth|expir|updat|modif/;
+  var DATEISH = /(?:date|time|stamp|at)$/;
+  var ID_KEY = /^(?:video|item|aweme)?id$/;
+  var DESC_KEY = /^(?:desc|description|videodesc|videodescription|title|caption|text|videotitle)$/;
+  var AUTHOR_KEY = /^(?:author|authorname|authoruniqueid|uniqueid|username|nickname|account|creator)$/;
+
+  function clip(s, n) {
+    s = String(s).replace(/[\u0000-\u001f\u007f]+/g, ' ').trim();
+    return s.length > n ? s.slice(0, n) + '…' : s;
+  }
+
+  /* Mengambil kolom yang kita kenal dari satu objek. */
+  function fieldsOf(o) {
+    var f = { link: null, id: null, date: null, desc: null, author: null, postedKey: false, unsafeId: false };
+    var linkExact = null, linkLoose = null, linkAny = null;
+    var dSpec, dPlain;
+    var keys = Object.keys(o);
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i], v = o[k];
+      var tv = typeof v;
+      if (tv !== 'string' && tv !== 'number') continue;
+      var nk = norm(k);
+
+      if (DATEISH.test(nk) && DATE_POSTED.test(nk)) { f.postedKey = true; continue; }
+
+      if (tv === 'string') {
+        if (LINK_EXACT.test(nk)) { if (linkExact === null && v.trim()) linkExact = v; continue; }
+        if (LINK_LOOSE.test(nk)) { if (linkLoose === null && v.trim()) linkLoose = v; continue; }
+      }
+      if (DATE_SPECIFIC[0].test(nk) || DATE_SPECIFIC[1].test(nk)) { if (dSpec === undefined) dSpec = v; continue; }
+      if (DATE_PLAIN.test(nk)) { if (dPlain === undefined) dPlain = v; continue; }
+      if (ID_KEY.test(nk)) {
+        if (tv === 'string' && /^\d{5,30}$/.test(v.trim())) { if (f.id === null) f.id = v.trim(); }
+        else if (tv === 'number') {
+          // ID TikTok (19 digit) melebihi presisi angka JSON; jangan percaya.
+          if (Number.isSafeInteger(v) && v >= 10000) { if (f.id === null) f.id = String(v); }
+          else f.unsafeId = true;
+        }
+        continue;
+      }
+      if (tv === 'string') {
+        if (DESC_KEY.test(nk)) { if (f.desc === null && v.trim()) f.desc = clip(v, 280); continue; }
+        if (AUTHOR_KEY.test(nk)) { if (f.author === null && v.trim()) f.author = clip(v, 100); continue; }
+        if (linkAny === null && /^[a-z][a-z0-9+.\-]*:/i.test(v.trim()) && /tiktok/i.test(v)) linkAny = v;
+      }
+    }
+    f.link = linkExact !== null ? linkExact : linkLoose !== null ? linkLoose : linkAny;
+    f.date = dSpec !== undefined ? dSpec : dPlain !== undefined ? dPlain : null;
+    return f;
+  }
+
+  /* ---------- Kategori ---------- */
+  var RX_HISTORY = /browsing|history|watched|riwayat/;
+  var RX_LIKED = /like|digg|suka/;
+  var RX_FAV = /favou?rite|saved|collect|bookmark|simpan/;
+  var RX_NOTVIDEO = /sound|music|effect|hashtag|sticker|song|audio|filter/;
+  var RX_NONVIDEO_PATH = /^\/(?:music|tag|effect|sticker|discover|place|playlist|following)(?:\/|$)/;
+
+  function classify(path) {
+    var segs = [];
+    for (var i = 0; i < path.length; i++) if (typeof path[i] === 'string') segs.push(path[i]);
+    var skippedMisleadingLeaf = false;
+    for (var j = segs.length - 1; j >= 0; j--) {
+      var n = norm(segs[j]);
+      // Di ekspor TikTok, "ItemFavoriteList" berada di bawah "Like List" dan berisi video DISUKAI.
+      if (j === segs.length - 1 && n === 'itemfavoritelist') { skippedMisleadingLeaf = true; continue; }
+      if (RX_NOTVIDEO.test(n)) return 'other';
+      if (RX_HISTORY.test(n)) return 'history';
+      var liked = RX_LIKED.test(n), fav = RX_FAV.test(n);
+      if (liked && fav) return 'unknown';
+      if (liked) return 'liked';
+      if (fav) return 'favorite';
+    }
+    return skippedMisleadingLeaf ? 'liked' : 'unknown';
+  }
+
+  var CATEGORY_LABEL = {
+    favorite: 'Favorit / Tersimpan',
+    liked: 'Disukai (like)',
+    history: 'Riwayat tontonan',
+    other: 'Bukan video',
+    unknown: 'Tidak diketahui'
+  };
+
+  function pathText(path) {
+    var out = '';
+    for (var i = 0; i < path.length; i++) {
+      var p = path[i];
+      if (typeof p === 'number') out += '[' + p + ']';
+      else out += (out ? ' › ' : '') + p;
+    }
+    return out || '(isi utama file)';
+  }
+
+  /* ---------- Menilai sebuah array ---------- */
+  function evaluateArray(arr) {
+    var n = arr.length;
+    var step = Math.max(1, Math.floor(n / SAMPLE));
+    var seen = 0, entryLike = 0, objects = 0, strings = 0, dated = 0, nonVideo = 0;
+    for (var i = 0; i < n && seen < SAMPLE; i += step) {
+      var it = arr[i];
+      seen++;
+      if (it && typeof it === 'object' && !Array.isArray(it)) {
+        objects++;
+        var f = fieldsOf(it);
+        if (f.link !== null || f.id !== null) {
+          entryLike++;
+          if (f.date !== null) dated++;
+          if (f.link !== null) {
+            var p = U().parseTikTokUrl(f.link);
+            if (p.ok && RX_NONVIDEO_PATH.test(safePath(p.href))) nonVideo++;
+          }
+        }
+      } else if (typeof it === 'string') {
+        strings++;
+        if (/^https?:\/\//i.test(it.trim())) entryLike++;
+      }
+    }
+    return {
+      seen: seen,
+      kind: objects >= strings ? 'objects' : 'strings',
+      linkRate: seen ? entryLike / seen : 0,
+      dateRate: entryLike ? dated / entryLike : 0,
+      nonVideoRate: entryLike ? nonVideo / entryLike : 0,
+      strong: seen > 0 && entryLike / seen >= 0.5,
+      plausibleWeak: objects + strings > 0
+    };
+  }
+
+  function safePath(href) {
+    try { return new URL(href).pathname; } catch (e) { return ''; }
+  }
+
+  function sampleOf(arr) {
+    var out = [];
+    for (var i = 0; i < arr.length && out.length < 2; i++) {
+      var it = arr[i];
+      if (it && typeof it === 'object') {
+        var f = fieldsOf(it);
+        out.push({ date: f.date === null ? null : clip(f.date, 40), link: f.link === null ? null : clip(f.link, 90), id: f.id });
+      } else if (typeof it === 'string') {
+        out.push({ date: null, link: clip(it, 90), id: null });
+      }
+    }
+    return out;
+  }
+
+  /*
+   * Mencari kandidat bagian data. Hasil:
+   *   { candidates: [...], truncated: bool }
+   * Kandidat "weak" = array objek/teks yang tidak terlihat memuat tautan; hanya untuk pilihan manual.
+   */
+  function findCandidates(root, fileName) {
+    var found = [];
+    var stack = [{ node: root, path: [] }];
+    var visited = 0, truncated = false;
+    while (stack.length) {
+      var cur = stack.pop();
+      var node = cur.node;
+      if (++visited > MAX_NODES) { truncated = true; break; }
+
+      if (Array.isArray(node)) {
+        if (node.length === 0) {
+          var cat0 = classify(cur.path);
+          if (cat0 === 'favorite' || cat0 === 'liked' || cat0 === 'history') {
+            found.push(makeCand(fileName, cur.path, node, null, cat0, true));
+          }
+          continue;
+        }
+        var ev = evaluateArray(node);
+        if (ev.strong) {
+          var cat = classify(cur.path);
+          if (ev.nonVideoRate >= 0.7) cat = 'other';
+          found.push(makeCand(fileName, cur.path, node, ev, cat, false));
+          continue;
+        }
+        if (ev.plausibleWeak) found.push(makeCand(fileName, cur.path, node, ev, 'unknown', false, true));
+        if (cur.path.length < MAX_DEPTH) {
+          var lim = Math.min(node.length, 100);
+          for (var i = lim - 1; i >= 0; i--) {
+            var c = node[i];
+            if (c && typeof c === 'object') stack.push({ node: c, path: cur.path.concat([i]) });
+          }
+        }
+      } else if (node && typeof node === 'object') {
+        if (cur.path.length >= MAX_DEPTH) continue;
+        var keys = Object.keys(node);
+        for (var j = keys.length - 1; j >= 0; j--) {
+          var ch = node[keys[j]];
+          if (ch && typeof ch === 'object') stack.push({ node: ch, path: cur.path.concat([keys[j]]) });
+        }
+      }
+    }
+    return { candidates: found, truncated: truncated };
+  }
+
+  function makeCand(file, path, arr, ev, category, empty, weak) {
+    return {
+      id: null, // diisi pemanggil
+      file: file,
+      path: path,
+      pathText: pathText(path),
+      length: arr.length,
+      empty: !!empty,
+      weak: !!weak,
+      kind: ev ? ev.kind : 'objects',
+      linkRate: ev ? ev.linkRate : 0,
+      dateRate: ev ? ev.dateRate : 0,
+      category: category,
+      categoryLabel: CATEGORY_LABEL[category],
+      sample: empty ? [] : sampleOf(arr)
+    };
+  }
+
+  function sortCandidates(list) {
+    var rank = { favorite: 0, liked: 1, history: 2, unknown: 3, other: 4 };
+    return list.slice().sort(function (a, b) {
+      if (a.weak !== b.weak) return a.weak ? 1 : -1;
+      if (a.empty !== b.empty) return a.empty ? 1 : -1;
+      if (rank[a.category] !== rank[b.category]) return rank[a.category] - rank[b.category];
+      return b.length - a.length;
+    });
+  }
+
+  function resolvePath(root, path) {
+    var cur = root;
+    for (var i = 0; i < path.length; i++) {
+      if (cur === null || typeof cur !== 'object') return null;
+      cur = cur[path[i]];
+    }
+    return Array.isArray(cur) ? cur : null;
+  }
+
+  /* ---------- Item -> entri ---------- */
+  function toEntry(item, pos, src, now) {
+    var f, linkRaw;
+    if (typeof item === 'string') {
+      linkRaw = item;
+      f = { link: item, id: null, date: null, desc: null, author: null, postedKey: false };
+    } else if (item && typeof item === 'object' && !Array.isArray(item)) {
+      f = fieldsOf(item);
+      linkRaw = f.link;
+    } else {
+      return { fail: { reason: 'bukan-objek', preview: previewOf(item) } };
+    }
+
+    var url = null, id = null, key = null, author = null;
+    if (linkRaw !== null) {
+      var p = U().parseTikTokUrl(linkRaw);
+      if (!p.ok) return { fail: { reason: p.reason, preview: clip(linkRaw, 160) } };
+      url = p.href;
+      id = p.id || f.id;
+      author = p.author;
+      key = p.id ? p.key : id ? U().keyForId(id) : p.key;
+    } else if (f.id !== null) {
+      id = f.id;
+      key = U().keyForId(id);
+    } else {
+      return { fail: { reason: 'tanpa-tautan-atau-id', preview: previewOf(item) } };
+    }
+
+    var d = D().parseDate(f.date, now);
+    return {
+      entry: {
+        pos: pos,
+        src: src,
+        id: id,
+        url: url,
+        key: key,
+        ts: d.ts,
+        dateRaw: d.raw,
+        dateState: d.state,
+        author: f.author !== null ? f.author : author,
+        desc: f.desc
+      },
+      postedKey: f.postedKey
+    };
+  }
+
+  function previewOf(item) {
+    try {
+      var s = JSON.stringify(item);
+      return s === undefined ? String(item) : clip(s, 160);
+    } catch (e) {
+      return '(tidak bisa ditampilkan)';
+    }
+  }
+
+  /*
+   * Membaca semua item dari array terpilih. Mengembalikan:
+   *   { entries, stats }
+   * Tidak ada entri yang dibuang diam-diam: yang gagal dihitung per alasan dan
+   * 200 contoh pertamanya disimpan untuk ditampilkan.
+   */
+  function extractFromArray(arr, src, now, stats) {
+    var entries = [];
+    for (var i = 0; i < arr.length; i++) {
+      stats.found++;
+      var r = toEntry(arr[i], i, src, now);
+      if (r.fail) {
+        stats.failed++;
+        stats.failReasons[r.fail.reason] = (stats.failReasons[r.fail.reason] || 0) + 1;
+        if (stats.failSamples.length < 200) stats.failSamples.push({ src: src, pos: i, reason: r.fail.reason, preview: r.fail.preview });
+        continue;
+      }
+      stats.valid++;
+      if (r.postedKey) stats.postedDateIgnored = true;
+      stats.dates[r.entry.dateState]++;
+      entries.push(r.entry);
+    }
+    return entries;
+  }
+
+  function newStats() {
+    return {
+      found: 0, valid: 0, failed: 0,
+      failReasons: {}, failSamples: [],
+      dates: { ok: 0, missing: 0, invalid: 0 },
+      postedDateIgnored: false
+    };
+  }
+
+  /* ---------- Ringkasan struktur tanpa nilai ---------- */
+  function maskString(s) {
+    s = String(s);
+    if (/^https?:\/\//i.test(s)) {
+      var m = /^(https?:\/\/[^\/?#]*)([^?#]*)/i.exec(s);
+      if (m) {
+        var host = m[1].replace(/\/\/[^@\/]*@/, '//‹kredensial›@');
+        var segs = m[2].split('/').map(function (seg) {
+          if (!seg) return seg;
+          if (/^\d+$/.test(seg)) return '<angka>';
+          if (seg.charAt(0) === '@') return '@<akun>';
+          return seg.length > 16 ? '<teks-panjang>' : seg;
+        });
+        return host + segs.join('/') + (/[?#]/.test(s) ? '?…' : '');
+      }
+    }
+    if (s.length > 40 || /@/.test(s)) return '<teks ' + s.length + ' karakter>';
+    return s.replace(/[A-Za-z]/g, 'a').replace(/\d/g, '9');
+  }
+
+  function maskKey(k) {
+    return /^\d{5,}$/.test(k) || /@/.test(k) || k.length > 60 ? '‹disamarkan›' : k;
+  }
+
+  function outline(root, fileName) {
+    var lines = ['# ' + fileName + ' (hanya nama kunci, tipe, dan pola — tanpa isi data)'];
+    var MAX_KEYS = 30, MAX_LINES = 400, MAX_D = 6;
+    function push(depth, text) { if (lines.length < MAX_LINES) lines.push(new Array(depth + 1).join('  ') + text); }
+    function walk(v, label, depth) {
+      if (lines.length >= MAX_LINES) return;
+      if (Array.isArray(v)) {
+        var first = null;
+        for (var i = 0; i < v.length; i++) if (v[i] !== null && v[i] !== undefined) { first = v[i]; break; }
+        push(depth, label + ' [array, ' + v.length + ' item]');
+        if (first !== null && typeof first === 'object' && depth < MAX_D) walk(first, '(contoh item)', depth + 1);
+        else if (typeof first === 'string') push(depth + 1, '(contoh item): teks, pola ' + maskString(first));
+        return;
+      }
+      if (v && typeof v === 'object') {
+        var keys = Object.keys(v);
+        push(depth, label + ' {objek, ' + keys.length + ' kunci}');
+        if (depth >= MAX_D) return;
+        for (var j = 0; j < keys.length && j < MAX_KEYS; j++) walk(v[keys[j]], maskKey(keys[j]), depth + 1);
+        if (keys.length > MAX_KEYS) push(depth + 1, '…(+' + (keys.length - MAX_KEYS) + ' kunci lainnya)');
+        return;
+      }
+      if (typeof v === 'string') push(depth, label + ': teks, pola ' + maskString(v));
+      else push(depth, label + ': ' + (v === null ? 'null' : typeof v));
+    }
+    walk(root, '(akar)', 0);
+    if (lines.length >= MAX_LINES) lines.push('…(dipotong)');
+    return lines.join('\n');
+  }
+
+  L.extract = {
+    fieldsOf: fieldsOf,
+    classify: classify,
+    categoryLabel: CATEGORY_LABEL,
+    findCandidates: findCandidates,
+    sortCandidates: sortCandidates,
+    resolvePath: resolvePath,
+    toEntry: toEntry,
+    extractFromArray: extractFromArray,
+    newStats: newStats,
+    outline: outline,
+    maskString: maskString
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * importer.js — alur impor: kenali jenis file (JSON / ZIP), baca, urai, cari bagian
+ * data, lalu ekstrak entri dari bagian yang dipilih pengguna.
+ *
+ * Kelas ini TIDAK menyentuh DOM, jadi sama-sama bisa jalan di Web Worker, di thread
+ * utama (mode cadangan), dan di Node (untuk pengujian).
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  var MB = 1024 * 1024;
+  var DEFAULT_LIMITS = {
+    maxJsonBytes: 250 * MB,   // ukuran satu file JSON (setelah diekstrak bila dari ZIP)
+    maxTotalBytes: 400 * MB,  // total isi yang boleh diekstrak dari satu ZIP
+    maxJsonEntries: 8,        // berapa file .json dalam ZIP yang dibaca
+    maxRatio: 300,            // rasio kompresi tertinggi yang wajar
+    maxZipEntries: 50000,
+    warnBytes: 80 * MB
+  };
+
+  function ImportError(code, message, detail) {
+    var e = new Error(message);
+    e.name = 'ImportError';
+    e.code = code;
+    e.detail = detail || null;
+    return e;
+  }
+
+  function serializeError(e) {
+    return {
+      code: e && e.code ? e.code : 'tak-terduga',
+      message: e && e.message ? e.message : String(e),
+      detail: e && e.detail ? e.detail : null
+    };
+  }
+
+  function mb(n) { return L.zip.formatMB(n); }
+
+  class Importer {
+    constructor(opts) {
+      opts = opts || {};
+      this.limits = Object.assign({}, DEFAULT_LIMITS, opts.limits || {});
+      this.onStatus = opts.onStatus || function () {};
+      this.yieldUI = opts.yield || function () { return Promise.resolve(); };
+      this.now = typeof opts.now === 'number' ? opts.now : Date.now();
+      this.docs = [];
+      this.candidates = [];
+    }
+
+    status(text) { this.onStatus(text); }
+
+    async load(file) {
+      var lim = this.limits;
+      if (!file || typeof file.size !== 'number') throw ImportError('tanpa-file', 'Tidak ada file yang dipilih.');
+      if (file.size === 0) throw ImportError('file-kosong', 'File ini kosong (0 byte). Unduh ulang file ekspor dari TikTok.');
+
+      this.status('Memeriksa jenis file…');
+      await this.yieldUI();
+      var kind = await this.sniff(file);
+      var warnings = [];
+      var docs = [];
+
+      if (kind === 'zip') {
+        var entries;
+        try {
+          entries = await L.zip.listEntries(file, { maxEntries: lim.maxZipEntries });
+        } catch (e) {
+          throw ImportError(e.code || 'zip-tidak-valid', e.message);
+        }
+        var jsons = entries.filter(function (en) {
+          return !en.isDir && /\.json$/i.test(en.name) && !/(^|\/)(__MACOSX\/|\._)/.test(en.name);
+        });
+        if (!jsons.length) {
+          var names = entries.filter(function (en) { return !en.isDir; }).slice(0, 12).map(function (en) { return en.name; });
+          throw ImportError('zip-tanpa-json',
+            'ZIP ini tidak berisi file .json. Saat meminta data di TikTok, pilih format JSON (bukan TXT).',
+            names.length ? 'Isi ZIP (maks. 12 nama): ' + names.join(', ') : 'ZIP kosong.');
+        }
+        jsons.sort(function (a, b) { return b.size - a.size; });
+        if (jsons.length > lim.maxJsonEntries) {
+          warnings.push((jsons.length - lim.maxJsonEntries) + ' file JSON lain di dalam ZIP tidak dibaca (hanya ' + lim.maxJsonEntries + ' terbesar).');
+          jsons = jsons.slice(0, lim.maxJsonEntries);
+        }
+        var total = 0;
+        jsons.forEach(function (en) { total += en.size; });
+        if (total > lim.maxTotalBytes) {
+          throw ImportError('zip-terlalu-besar', 'Isi JSON di dalam ZIP setelah diekstrak berukuran ' + mb(total) + ', melebihi batas ' + mb(lim.maxTotalBytes) + '. Minta ekspor dengan kategori lebih sedikit (cukup Aktivitas/Favorit).');
+        }
+        for (var i = 0; i < jsons.length; i++) {
+          var en = jsons[i];
+          if (en.size > lim.warnBytes) warnings.push('"' + en.name + '" besar (' + mb(en.size) + '); jika browser kehabisan memori, minta ekspor dengan kategori lebih sedikit.');
+          this.status('Membuka ' + en.name + ' (' + mb(en.size) + ') dari ZIP…');
+          await this.yieldUI();
+          var text;
+          try {
+            text = await L.zip.readEntryText(file, en, { maxBytes: lim.maxJsonBytes, maxRatio: lim.maxRatio });
+          } catch (e2) {
+            throw ImportError(e2.code || 'zip-rusak', e2.message);
+          }
+          docs.push(await this.parse(text, en.name, en.size));
+          text = null;
+        }
+      } else {
+        if (file.size > lim.maxJsonBytes) {
+          throw ImportError('file-terlalu-besar', 'File berukuran ' + mb(file.size) + ', melebihi batas ' + mb(lim.maxJsonBytes) + '. Minta ekspor dengan kategori lebih sedikit, atau pakai komputer.');
+        }
+        if (file.size > lim.warnBytes) warnings.push('File besar (' + mb(file.size) + '); jika browser kehabisan memori, minta ekspor dengan kategori lebih sedikit.');
+        this.status('Membaca file (' + mb(file.size) + ')…');
+        await this.yieldUI();
+        var t = await file.text();
+        if (t.charCodeAt(0) === 0xfeff) t = t.slice(1);
+        docs.push(await this.parse(t, file.name || 'file.json', file.size));
+        t = null;
+      }
+
+      this.docs = docs;
+      return this.scan(kind, warnings);
+    }
+
+    /* Untuk demo/tes: lewati pembacaan file, langsung dari objek JS. */
+    loadObject(root, name) {
+      this.docs = [{ name: name || 'demo.json', bytes: 0, root: root }];
+      return this.scan('objek', []);
+    }
+
+    async parse(text, name, bytes) {
+      this.status('Mengurai JSON "' + name + '"…');
+      await this.yieldUI();
+      var root;
+      try {
+        root = JSON.parse(text);
+      } catch (e) {
+        throw ImportError('json-rusak',
+          'File "' + name + '" bukan JSON yang valid; mungkin terpotong saat diunduh atau bukan file ekspor TikTok.',
+          e && e.message ? e.message : null);
+      }
+      if (root === null || typeof root !== 'object') {
+        throw ImportError('json-bukan-objek', 'File "' + name + '" adalah JSON valid tetapi isinya bukan objek atau daftar. Ini bukan file ekspor data TikTok.');
+      }
+      return { name: name, bytes: bytes, root: root };
+    }
+
+    scan(kind, warnings) {
+      this.status('Mencari bagian data…');
+      var all = [];
+      var outlines = [];
+      var truncated = false;
+      var docs = this.docs;
+      for (var i = 0; i < docs.length; i++) {
+        var r = L.extract.findCandidates(docs[i].root, docs[i].name);
+        r.candidates.forEach(function (c) { c.docIndex = i; });
+        all = all.concat(r.candidates);
+        if (r.truncated) truncated = true;
+        outlines.push(L.extract.outline(docs[i].root, docs[i].name));
+      }
+      if (truncated) warnings.push('File sangat besar; pencarian bagian data dihentikan lebih awal dan mungkin tidak lengkap.');
+      all = L.extract.sortCandidates(all);
+      all.forEach(function (c, idx) { c.id = 'c' + idx; });
+      this.candidates = all;
+      return {
+        kind: kind,
+        docs: docs.map(function (d) { return { name: d.name, bytes: d.bytes }; }),
+        candidates: all,
+        outline: outlines.join('\n\n'),
+        warnings: warnings
+      };
+    }
+
+    extract(ids) {
+      var stats = L.extract.newStats();
+      var entries = [];
+      var sections = [];
+      var self = this;
+      ids.forEach(function (id) {
+        var cand = null;
+        for (var i = 0; i < self.candidates.length; i++) if (self.candidates[i].id === id) { cand = self.candidates[i]; break; }
+        if (!cand) throw ImportError('bagian-tidak-ada', 'Bagian data yang dipilih tidak ditemukan.');
+        var arr = L.extract.resolvePath(self.docs[cand.docIndex].root, cand.path);
+        if (!arr) throw ImportError('bagian-tidak-ada', 'Bagian data "' + cand.pathText + '" tidak lagi bisa dibaca.');
+        var src = sections.length;
+        sections.push({ name: cand.pathText, file: cand.file, category: cand.category, categoryLabel: cand.categoryLabel });
+        var part = L.extract.extractFromArray(arr, src, self.now, stats);
+        for (var k = 0; k < part.length; k++) entries.push(part[k]);
+      });
+      return { entries: entries, stats: stats, sections: sections };
+    }
+
+    dispose() {
+      this.docs = [];
+      this.candidates = [];
+    }
+
+    /* Mengenali jenis file dari isinya, bukan dari ekstensi. */
+    async sniff(file) {
+      var head = new Uint8Array(await file.slice(0, 4096).arrayBuffer());
+      if (head.length >= 4 && head[0] === 0x50 && head[1] === 0x4b && (head[2] === 0x03 || head[2] === 0x05) && (head[3] === 0x04 || head[3] === 0x06)) return 'zip';
+      var text = new TextDecoder('utf-8').decode(head);
+      if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+      var trimmed = text.replace(/^\s+/, '');
+      var c = trimmed.charAt(0);
+      if (c === '{' || c === '[') return 'json';
+      var hint = '';
+      if (/^\s*(Date:|Link:|Favorite|Like|Video)/i.test(trimmed) || /\n\s*Date:\s/.test(text)) {
+        hint = 'File ini tampak seperti ekspor format TXT. Minta ulang data di TikTok dan pilih format JSON.';
+      } else if (c === '<') {
+        hint = 'File ini tampak seperti halaman web (HTML). Pilih file ekspor .json atau .zip dari TikTok.';
+      } else {
+        hint = 'Pilih file .json, atau .zip yang berisi .json, dari ekspor data TikTok.';
+      }
+      throw ImportError('format-tidak-dikenali', 'Format file tidak dikenali. ' + hint);
+    }
+  }
+
+  L.Importer = Importer;
+  L.ImportError = ImportError;
+  L.serializeError = serializeError;
+  L.DEFAULT_LIMITS = DEFAULT_LIMITS;
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * view.js — logika murni untuk daftar: deduplikasi, filter, pencarian, urutan, halaman.
+ * Tidak menyentuh DOM, sehingga bisa diuji langsung di Node.
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  var ORDERS = ['saved-asc', 'saved-desc', 'file-asc', 'file-desc'];
+
+  /* Statistik duplikat atas SELURUH entri (tidak terpengaruh filter). */
+  function dupStats(entries) {
+    var count = Object.create(null);
+    for (var i = 0; i < entries.length; i++) {
+      var k = entries[i].key;
+      count[k] = (count[k] || 0) + 1;
+    }
+    var groups = 0, extra = 0;
+    for (var key in count) {
+      if (count[key] > 1) { groups++; extra += count[key] - 1; }
+    }
+    return { groups: groups, extraCopies: extra, counts: count };
+  }
+
+  function compareFile(a, b) {
+    return a.src - b.src || a.pos - b.pos;
+  }
+
+  function compareSavedAsc(a, b) {
+    var an = a.ts === null, bn = b.ts === null;
+    if (an !== bn) return an ? 1 : -1; // tanpa tanggal selalu di akhir
+    if (an) return compareFile(a, b);
+    return a.ts - b.ts || compareFile(a, b);
+  }
+
+  function compareSavedDesc(a, b) {
+    var an = a.ts === null, bn = b.ts === null;
+    if (an !== bn) return an ? 1 : -1;
+    if (an) return compareFile(b, a);
+    return b.ts - a.ts || compareFile(b, a);
+  }
+
+  function haystack(e) {
+    if (e._h === undefined) {
+      var h = (e.url || '') + ' ' + (e.id || '') + ' ' + (e.author || '') + ' ' + (e.desc || '') + ' ' + (e.dateRaw || '');
+      // properti non-enumerable supaya tidak ikut tersimpan ke IndexedDB/di-clone
+      Object.defineProperty(e, '_h', { value: h.toLowerCase(), enumerable: false, writable: true });
+    }
+    return e._h;
+  }
+
+  /*
+   * opts:
+   *   order, query, fromTs, toTs (null = bebas), undated ('end'|'hide'|'only'),
+   *   dedupe (bool), onlyBookmarks (bool), bookmarks (Set of key)
+   * Hasil: { list, total, dupHidden, excluded: {search, date, undated, bookmarks} }
+   */
+  function buildView(entries, opts) {
+    opts = opts || {};
+    var order = ORDERS.indexOf(opts.order) >= 0 ? opts.order : 'saved-asc';
+    var excluded = { search: 0, date: 0, undated: 0, bookmarks: 0 };
+    var dupHidden = 0;
+    var base = entries;
+
+    if (opts.dedupe) {
+      // Pertahankan satu wakil per kunci: yang tanggalnya paling awal; bila tidak ada tanggal, yang pertama di file.
+      var rep = Object.create(null);
+      for (var i = 0; i < entries.length; i++) {
+        var e = entries[i];
+        var cur = rep[e.key];
+        if (cur === undefined) rep[e.key] = e;
+        else if (isBetterRep(e, cur)) rep[e.key] = e;
+      }
+      base = [];
+      for (var j = 0; j < entries.length; j++) {
+        if (rep[entries[j].key] === entries[j]) base.push(entries[j]);
+        else dupHidden++;
+      }
+    }
+
+    var tokens = (opts.query || '').toLowerCase().split(/\s+/).filter(Boolean);
+    var hasFrom = typeof opts.fromTs === 'number', hasTo = typeof opts.toTs === 'number';
+    var undated = opts.undated || 'end';
+    var out = [];
+    for (var n = 0; n < base.length; n++) {
+      var it = base[n];
+      if (undated === 'hide' && it.ts === null) { excluded.undated++; continue; }
+      if (undated === 'only' && it.ts !== null) { excluded.undated++; continue; }
+      if ((hasFrom || hasTo) && undated !== 'only') {
+        if (it.ts === null) { excluded.date++; continue; }
+        if ((hasFrom && it.ts < opts.fromTs) || (hasTo && it.ts > opts.toTs)) { excluded.date++; continue; }
+      }
+      if (opts.onlyBookmarks && !(opts.bookmarks && opts.bookmarks.has(it.key))) { excluded.bookmarks++; continue; }
+      if (tokens.length) {
+        var h = haystack(it), ok = true;
+        for (var t = 0; t < tokens.length; t++) if (h.indexOf(tokens[t]) < 0) { ok = false; break; }
+        if (!ok) { excluded.search++; continue; }
+      }
+      out.push(it);
+    }
+
+    var cmp = order === 'saved-asc' ? compareSavedAsc
+      : order === 'saved-desc' ? compareSavedDesc
+      : order === 'file-asc' ? compareFile
+      : function (a, b) { return compareFile(b, a); };
+    out.sort(cmp);
+
+    return { list: out, total: out.length, dupHidden: dupHidden, excluded: excluded, order: order };
+  }
+
+  function isBetterRep(cand, cur) {
+    if (cand.ts !== null && cur.ts === null) return true;
+    if (cand.ts === null && cur.ts !== null) return false;
+    if (cand.ts !== null && cand.ts !== cur.ts) return cand.ts < cur.ts;
+    return compareFile(cand, cur) < 0;
+  }
+
+  function paginate(total, pageSize, page) {
+    pageSize = pageSize > 0 ? pageSize : 50;
+    var pages = Math.max(1, Math.ceil(total / pageSize));
+    var p = Math.min(Math.max(1, Math.floor(Number(page)) || 1), pages);
+    var start = (p - 1) * pageSize;
+    return { page: p, pages: pages, pageSize: pageSize, start: start, end: Math.min(total, start + pageSize) };
+  }
+
+  /* Sidik jari ringan untuk mengenali "daftar yang sama" saat memulihkan posisi. */
+  function fingerprint(entries, sectionNames) {
+    var s = entries.length + '|' + (sectionNames || []).join(',');
+    var picks = [0, 1, 2, Math.floor(entries.length / 2), entries.length - 3, entries.length - 2, entries.length - 1];
+    for (var i = 0; i < picks.length; i++) {
+      var e = entries[picks[i]];
+      if (e) s += '|' + e.key + '@' + e.ts;
+    }
+    var h = 0x811c9dc5;
+    for (var j = 0; j < s.length; j++) {
+      h ^= s.charCodeAt(j);
+      h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    return h.toString(16);
+  }
+
+  L.view = { ORDERS: ORDERS, buildView: buildView, paginate: paginate, dupStats: dupStats, fingerprint: fingerprint };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * demo.js — pembuat data FIKTIF untuk mode demo, contoh file, dan pengujian.
+ *
+ * Semua ID dan akun di sini karangan acak. Tautannya tidak menunjuk ke video yang
+ * sengaja dipilih; di mode demo tombol "Buka di TikTok" dinonaktifkan.
+ *
+ * Struktur kunci (Activity › Favorite Videos › FavoriteVideoList, dst.) meniru
+ * bentuk ekspor TikTok yang umum diketahui, tetapi belum diverifikasi terhadap file
+ * ekspor asli milikmu.
+ *
+ * makeExport(n, seed) mengembalikan { data, expected } — "expected" dihitung dari
+ * rencana pembuatan, sehingga tes bisa membandingkan hasil parser dengan angka
+ * yang diketahui sebelumnya.
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  function rng(seed) {
+    var a = seed >>> 0;
+    return function () {
+      a = (a + 0x6d2b79f5) >>> 0;
+      var t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function fmt(ts) {
+    return new Date(ts).toISOString().slice(0, 19).replace('T', ' ');
+  }
+
+  function makeExport(n, seed) {
+    var r = rng(seed === undefined ? 20260101 : seed);
+    var START = Date.UTC(2019, 5, 1), END = Date.UTC(2026, 8, 1);
+
+    function fakeId() {
+      var s = '7';
+      for (var i = 0; i < 18; i++) s += Math.floor(r() * 10);
+      return s;
+    }
+
+    // Tanggal tersimpan, naik; ditulis ke file dengan yang terbaru di awal (hanya contoh).
+    var stamps = [];
+    for (var i = 0; i < n; i++) stamps.push(Math.floor(START + r() * (END - START)));
+    stamps.sort(function (a, b) { return a - b; });
+
+    var list = [];
+    var exp = { n: n, valid: 0, failed: 0, failReasons: {}, dates: { ok: 0, missing: 0, invalid: 0 }, dupExtra: 0 };
+    var prev = null; // tautan valid sebelumnya, untuk duplikat
+    var used = Object.create(null);
+
+    function fail(reason) {
+      exp.failed++;
+      exp.failReasons[reason] = (exp.failReasons[reason] || 0) + 1;
+    }
+
+    var hostile = [
+      ['javascript:alert(1)', 'bukan-https'],
+      ['https://tiktok.com.evil.example/@x/video/7000000000000000001', 'domain-bukan-tiktok'],
+      ['http://www.tiktok.com/@x/video/7000000000000000002', 'bukan-https'],
+      ['https://www.tiktok.com@evil.example/video/7000000000000000003', 'berisi-kredensial'],
+      ['https://eviltiktok.com/@x/video/7000000000000000004', 'domain-bukan-tiktok'],
+      ['data:text/html,<scr' + 'ipt>alert(1)<' + '/scr' + 'ipt>', 'bukan-https']
+    ];
+
+    for (var k = 0; k < n; k++) {
+      var kind = 'normal';
+      if ((k + 7) % 701 === 0) kind = 'nolink';
+      else if ((k + 5) % 401 === 0) kind = 'hostile';
+      else if ((k + 11) % 53 === 0 && prev) kind = 'dup';
+      else if ((k + 3) % 131 === 0) kind = 'invalid';
+      else if ((k + 1) % 97 === 0) kind = 'missing';
+
+      var item;
+      var stamp = stamps[k];
+      if (kind === 'nolink') {
+        item = { Date: fmt(stamp), Catatan: 'entri tanpa tautan (fiktif)' };
+        fail('tanpa-tautan-atau-id');
+        list.push(item);
+        continue;
+      }
+      if (kind === 'hostile') {
+        var h = hostile[(k >> 2) % hostile.length];
+        item = { Date: fmt(stamp), Link: h[0] };
+        fail(h[1]);
+        list.push(item);
+        continue;
+      }
+
+      var link;
+      if (kind === 'dup') {
+        link = prev;
+        exp.dupExtra++;
+      } else {
+        // Pastikan tautan baru benar-benar unik (kode pendek acak bisa kebetulan sama),
+        // supaya jumlah duplikat yang diharapkan persis sama dengan yang direncanakan.
+        do {
+          var pick = r();
+          if (pick < 0.6) link = 'https://www.tiktokv.com/share/video/' + fakeId() + '/';
+          else if (pick < 0.85) link = 'https://www.tiktok.com/@akun.fiktif.' + Math.floor(r() * 900) + '/video/' + fakeId();
+          else link = 'https://vm.tiktok.com/ZMdemo' + Math.floor(r() * 1e9).toString(36) + '/';
+        } while (used[link]);
+        used[link] = true;
+      }
+      item = { Date: fmt(stamp), Link: link };
+      if (kind === 'invalid') {
+        var bad = ['0000-00-00 00:00:00', '31/02/2023', 'tidak diketahui', '2999-01-01 00:00:00', '2023-02-31 10:00:00'];
+        item.Date = bad[k % bad.length];
+        exp.dates.invalid++;
+      } else if (kind === 'missing') {
+        delete item.Date;
+        exp.dates.missing++;
+      } else {
+        exp.dates.ok++;
+      }
+      if (kind !== 'dup' && r() < 0.25) item.Description = 'Deskripsi fiktif #' + k;
+      exp.valid++;
+      prev = link;
+      list.push(item);
+    }
+
+    // File asli kemungkinan menaruh yang terbaru di depan; tidak dijamin, hanya contoh.
+    list.reverse();
+
+    var likes = [], hist = [], sounds = [];
+    for (var a = 0; a < Math.min(150, Math.max(5, Math.floor(n / 50))); a++) {
+      likes.push({ Date: fmt(START + Math.floor(r() * (END - START))), Link: 'https://www.tiktokv.com/share/video/' + fakeId() + '/' });
+    }
+    for (var b = 0; b < Math.min(300, Math.max(5, Math.floor(n / 30))); b++) {
+      hist.push({ Date: fmt(START + Math.floor(r() * (END - START))), Link: 'https://www.tiktokv.com/share/video/' + fakeId() + '/' });
+    }
+    for (var c = 0; c < 6; c++) {
+      sounds.push({ Date: fmt(START + Math.floor(r() * (END - START))), Link: 'https://www.tiktok.com/music/suara-fiktif-' + c + '-7' + Math.floor(r() * 1e15) });
+    }
+
+    var data = {
+      Activity: {
+        'Favorite Videos': { FavoriteVideoList: list },
+        'Like List': { ItemFavoriteList: likes },
+        'Video Browsing History': { VideoList: hist },
+        'Favorite Sounds': { FavoriteSoundList: sounds }
+      }
+    };
+    return { data: data, expected: exp, extra: { likes: likes.length, history: hist.length, sounds: sounds.length } };
+  }
+
+  L.demo = { makeExport: makeExport, LABEL: 'DEMO — data fiktif', fmt: fmt };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * store.js — penyimpanan lokal (hanya di perangkat ini).
+ *
+ *  - localStorage : preferensi, penanda (bookmark), posisi terakhir. Kecil.
+ *  - IndexedDB    : daftar lengkap, HANYA jika pengguna mengaktifkannya (opt-in).
+ *
+ * Semua operasi aman terhadap: storage dimatikan/diblokir, kuota penuh, dan data
+ * dihapus oleh browser. Gagal = pesan jelas, bukan crash.
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  var PREFIX = 'lawas:';
+  var DB_NAME = 'lawas';
+  var CHUNK = 5000;
+
+  function storeError(code, message) {
+    var e = new Error(message);
+    e.name = 'StoreError';
+    e.code = code;
+    return e;
+  }
+
+  function isQuota(e) {
+    return !!e && (e.name === 'QuotaExceededError' || e.code === 22 || e.code === 1014 || /quota/i.test(e.message || ''));
+  }
+
+  function mapError(e, action) {
+    if (isQuota(e)) return storeError('kuota', 'Penyimpanan perangkat penuh atau dibatasi browser, jadi ' + action + ' gagal. Kosongkan ruang atau lewati opsi ini.');
+    return storeError('gagal', 'Gagal ' + action + ': ' + ((e && e.message) || 'penyimpanan tidak tersedia') + '.');
+  }
+
+  /* ---------- localStorage ---------- */
+  function ls() {
+    try { return G.localStorage || null; } catch (e) { return null; }
+  }
+  function lsGet(key, fallback) {
+    try {
+      var s = ls().getItem(PREFIX + key);
+      return s === null ? fallback : JSON.parse(s);
+    } catch (e) { return fallback; }
+  }
+  function lsSet(key, value) {
+    try {
+      ls().setItem(PREFIX + key, JSON.stringify(value));
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, quota: isQuota(e), message: isQuota(e) ? 'Penyimpanan penuh.' : 'Penyimpanan browser tidak tersedia.' };
+    }
+  }
+  function lsRemove(key) { try { ls().removeItem(PREFIX + key); } catch (e) { /* abaikan */ } }
+  function lsKeys() {
+    var out = [];
+    try {
+      var s = ls();
+      for (var i = 0; i < s.length; i++) {
+        var k = s.key(i);
+        if (k && k.indexOf(PREFIX) === 0) out.push(k);
+      }
+    } catch (e) { /* abaikan */ }
+    return out;
+  }
+
+  /* ---------- pengaturan, penanda, posisi ---------- */
+  function loadSettings() { return lsGet('settings', {}) || {}; }
+  function saveSettings(obj) { return lsSet('settings', obj); }
+
+  function loadBookmarks() {
+    var arr = lsGet('bookmarks', []);
+    var set = new Set();
+    if (Array.isArray(arr)) arr.forEach(function (k) { if (typeof k === 'string') set.add(k); });
+    return set;
+  }
+  function saveBookmarks(set) { return lsSet('bookmarks', Array.from(set)); }
+
+  function loadPosition(fp) { return lsGet('pos:' + fp, null); }
+  function savePosition(fp, pos) {
+    var list = lsGet('poslist', []);
+    if (!Array.isArray(list)) list = [];
+    list = list.filter(function (x) { return x !== fp; });
+    list.push(fp);
+    while (list.length > 5) lsRemove('pos:' + list.shift());
+    lsSet('poslist', list);
+    return lsSet('pos:' + fp, pos);
+  }
+
+  /* ---------- IndexedDB (daftar lengkap, opt-in) ---------- */
+  /*
+   * noCreate=true: hanya membuka database yang SUDAH ada. Kalau belum ada, upgrade dibatalkan
+   * sehingga tidak ada database kosong yang tertinggal di browser (mis. saat sekadar membuka aplikasi
+   * atau sesudah "Hapus semua data lokal").
+   */
+  function openDb(noCreate) {
+    return new Promise(function (resolve, reject) {
+      if (!G.indexedDB) return reject(storeError('idb-tidak-ada', 'Browser ini tidak menyediakan IndexedDB (mode privat?).'));
+      var req, absent = false;
+      try { req = G.indexedDB.open(DB_NAME, 1); } catch (e) { return reject(mapError(e, 'membuka penyimpanan')); }
+      req.onupgradeneeded = function () {
+        if (noCreate) { absent = true; try { req.transaction.abort(); } catch (e) { /* abaikan */ } return; }
+        var db = req.result;
+        if (!db.objectStoreNames.contains('meta')) db.createObjectStore('meta');
+        if (!db.objectStoreNames.contains('chunks')) db.createObjectStore('chunks');
+      };
+      req.onsuccess = function () { resolve(req.result); };
+      req.onerror = function (ev) {
+        if (absent) { if (ev && ev.preventDefault) ev.preventDefault(); return reject(storeError('tidak-ada', 'Belum ada daftar tersimpan.')); }
+        reject(mapError(req.error, 'membuka penyimpanan'));
+      };
+      req.onblocked = function () { reject(storeError('diblokir', 'Penyimpanan sedang dipakai tab lain. Tutup tab lain lalu coba lagi.')); };
+    });
+  }
+
+  function txDone(tx, action) {
+    return new Promise(function (resolve, reject) {
+      tx.oncomplete = function () { resolve(); };
+      tx.onerror = function () { reject(mapError(tx.error, action)); };
+      tx.onabort = function () { reject(mapError(tx.error, action)); };
+    });
+  }
+
+  async function saveList(entries, meta) {
+    var db = await openDb();
+    try {
+      var tx = db.transaction(['meta', 'chunks'], 'readwrite');
+      var chunks = tx.objectStore('chunks');
+      chunks.clear();
+      for (var i = 0, n = 0; i < entries.length; i += CHUNK, n++) chunks.put(entries.slice(i, i + CHUNK), n);
+      tx.objectStore('meta').put(Object.assign({ savedAt: Date.now(), count: entries.length }, meta), 'current');
+      await txDone(tx, 'menyimpan daftar');
+    } finally { db.close(); }
+  }
+
+  async function peekList() {
+    var db;
+    try { db = await openDb(true); } catch (e) { return null; }
+    try {
+      var tx = db.transaction('meta', 'readonly');
+      var req = tx.objectStore('meta').get('current');
+      await txDone(tx, 'membaca daftar');
+      return req.result || null;
+    } catch (e) { return null; } finally { db.close(); }
+  }
+
+  async function loadList() {
+    var db = await openDb();
+    try {
+      var tx = db.transaction(['meta', 'chunks'], 'readonly');
+      var m = tx.objectStore('meta').get('current');
+      var c = tx.objectStore('chunks').getAll();
+      await txDone(tx, 'membaca daftar');
+      if (!m.result) return null;
+      var entries = [];
+      (c.result || []).forEach(function (part) { for (var i = 0; i < part.length; i++) entries.push(part[i]); });
+      if (entries.length !== m.result.count) throw storeError('rusak', 'Daftar tersimpan tidak lengkap (mungkin dihapus sebagian oleh browser). Impor ulang file ekspor.');
+      return { meta: m.result, entries: entries };
+    } finally { db.close(); }
+  }
+
+  async function deleteList() {
+    var db = await openDb();
+    try {
+      var tx = db.transaction(['meta', 'chunks'], 'readwrite');
+      tx.objectStore('meta').clear();
+      tx.objectStore('chunks').clear();
+      await txDone(tx, 'menghapus daftar');
+    } finally { db.close(); }
+  }
+
+  /* Hapus SEMUA data lokal aplikasi ini. Mengembalikan ringkasan. */
+  async function wipeAll() {
+    var report = { localKeys: 0, indexedDb: 'tidak ada' };
+    var keys = lsKeys();
+    keys.forEach(function (k) { try { ls().removeItem(k); } catch (e) { /* abaikan */ } });
+    report.localKeys = keys.length;
+    if (G.indexedDB) {
+      report.indexedDb = await new Promise(function (resolve) {
+        var req;
+        try { req = G.indexedDB.deleteDatabase(DB_NAME); } catch (e) { return resolve('gagal'); }
+        req.onsuccess = function () { resolve('terhapus'); };
+        req.onerror = function () { resolve('gagal'); };
+        req.onblocked = function () { resolve('tertunda (tutup tab lain)'); };
+      });
+    }
+    return report;
+  }
+
+  async function estimate() {
+    try {
+      if (G.navigator && navigator.storage && navigator.storage.estimate) return await navigator.storage.estimate();
+    } catch (e) { /* abaikan */ }
+    return null;
+  }
+
+  async function requestPersist() {
+    try {
+      if (G.navigator && navigator.storage && navigator.storage.persist) return await navigator.storage.persist();
+    } catch (e) { /* abaikan */ }
+    return false;
+  }
+
+  L.store = {
+    loadSettings: loadSettings, saveSettings: saveSettings,
+    loadBookmarks: loadBookmarks, saveBookmarks: saveBookmarks,
+    loadPosition: loadPosition, savePosition: savePosition,
+    saveList: saveList, peekList: peekList, loadList: loadList, deleteList: deleteList,
+    wipeAll: wipeAll, estimate: estimate, requestPersist: requestPersist
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * app.js — antarmuka. Semua teks dari file pengguna ditampilkan lewat textContent
+ * (fungsi h() di bawah); tidak ada innerHTML di mana pun.
+ */
+(function () {
+  'use strict';
+  var L = globalThis.Lawas;
+  var $ = function (id) { return document.getElementById(id); };
+  var FORCE_MAIN = /[?&]worker=off\b/.test(location.search);
+  var nf = new Intl.NumberFormat('id-ID');
+  function fmtN(n) { return nf.format(n); }
+  function tick(ms) { return new Promise(function (r) { setTimeout(r, ms || 0); }); }
+
+  /* ---------- pembuat elemen (aman: hanya textContent / properti) ---------- */
+  function h(tag, attrs) {
+    var el = document.createElement(tag);
+    if (attrs) {
+      Object.keys(attrs).forEach(function (k) {
+        var v = attrs[k];
+        if (v === null || v === undefined || v === false) return;
+        if (k === 'class') el.className = v;
+        else if (k.slice(0, 2) === 'on' && typeof v === 'function') el.addEventListener(k.slice(2), v);
+        else if (k === 'for') el.htmlFor = v;
+        else if (k.slice(0, 5) === 'aria-' || k === 'role') el.setAttribute(k, v === true ? 'true' : v);
+        else if (k in el) el[k] = v;
+        else el.setAttribute(k, v === true ? '' : v);
+      });
+    }
+    for (var i = 2; i < arguments.length; i++) append(el, arguments[i]);
+    return el;
+  }
+  function append(el, kid) {
+    if (kid === null || kid === undefined || kid === false) return;
+    if (Array.isArray(kid)) { kid.forEach(function (k) { append(el, k); }); return; }
+    el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  }
+
+  /* ---------- status ---------- */
+  var S = {
+    screen: 'start',
+    engine: null,
+    importToken: 0,
+    pendingSource: 'file',
+    loaded: null,
+    entries: [], stats: null, sections: [], source: 'file', warnings: [],
+    hasDates: false, dupCounts: null, dupInfo: { groups: 0, extraCopies: 0 },
+    fp: '', bookmarks: new Set(), savedMeta: null,
+    f: null, view: null, resumed: false
+  };
+  var DEFAULT_F = { order: 'saved-asc', pageSize: 50, page: 1, query: '', from: '', to: '', undated: 'end', dedupe: false, onlyBm: false };
+
+  var toastTimer = null;
+  function toast(msg, ms) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.hidden = true; }, ms || 3000);
+  }
+
+  var SCREENS = ['start', 'busy', 'pick', 'list'];
+  function show(name) {
+    S.screen = name;
+    SCREENS.forEach(function (n) { $('screen-' + n).hidden = n !== name; });
+    $('pager').hidden = name !== 'list' || !S.view || S.view.total === 0;
+    document.body.classList.toggle('has-pager', name === 'list');
+    window.scrollTo(0, 0);
+    var head = document.querySelector('#screen-' + name + ' [tabindex="-1"]');
+    if (head) head.focus({ preventScroll: true });
+  }
+
+  function saveSetting(k, v) {
+    var s = L.store.loadSettings();
+    s[k] = v;
+    L.store.saveSettings(s);
+  }
+
+  /* ---------- dialog ---------- */
+  function confirmDialog(opts) {
+    return new Promise(function (resolve) {
+      var dlg = $('dlg-confirm'), ok = $('dlg-confirm-ok'), cancel = $('dlg-confirm-cancel');
+      $('dlg-confirm-title').textContent = opts.title;
+      $('dlg-confirm-body').textContent = opts.body;
+      ok.textContent = opts.ok || 'Ya';
+      function done(v) {
+        ok.onclick = null; cancel.onclick = null; dlg.onclose = null;
+        if (dlg.open) dlg.close();
+        resolve(v);
+      }
+      ok.onclick = function () { done(true); };
+      cancel.onclick = function () { done(false); };
+      dlg.onclose = function () { done(false); };
+      dlg.showModal();
+    });
+  }
+
+  async function copyText(text) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); return true; }
+    } catch (e) { /* lanjut ke cadangan */ }
+    try {
+      var ta = h('textarea', { readOnly: true });
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.append(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      var ok = document.execCommand('copy');
+      ta.remove();
+      if (ok) return true;
+    } catch (e2) { /* lanjut */ }
+    return false;
+  }
+  async function copyWithFallback(text, okMsg) {
+    if (await copyText(text)) { toast(okMsg); return; }
+    $('copy-area').value = text;
+    $('dlg-copy').showModal();
+    $('copy-area').focus();
+    $('copy-area').select();
+  }
+
+  /* ---------- mesin impor: Web Worker, dengan cadangan di thread utama ---------- */
+  function workerEngine(worker, url) {
+    var nextId = 1, pending = new Map(), dead = false, ready = false;
+    var readyWaiters = [];
+    function failAll(code, message) {
+      dead = true;
+      pending.forEach(function (p) { p.reject(Object.assign(new Error(message), { code: code })); });
+      pending.clear();
+      readyWaiters.forEach(function (w) { w.reject(Object.assign(new Error(message), { code: code })); });
+      readyWaiters = [];
+    }
+    worker.onmessage = function (ev) {
+      var m = ev.data || {};
+      if (m.type === 'ready') { ready = true; readyWaiters.forEach(function (w) { w.resolve(); }); readyWaiters = []; return; }
+      var p = pending.get(m.id);
+      if (!p) return;
+      if (m.type === 'status') { if (p.onStatus) p.onStatus(m.payload); }
+      else if (m.type === 'done') { pending.delete(m.id); p.resolve(m.payload); }
+      else if (m.type === 'error') { pending.delete(m.id); p.reject(Object.assign(new Error(m.payload.message), m.payload)); }
+    };
+    worker.onerror = function (ev) {
+      if (ev && ev.preventDefault) ev.preventDefault();
+      failAll('worker-gagal', 'Pekerja latar gagal berjalan.');
+    };
+    function whenReady() {
+      if (ready) return Promise.resolve();
+      if (dead) return Promise.reject(Object.assign(new Error('worker'), { code: 'worker-gagal' }));
+      return new Promise(function (resolve, reject) {
+        var w = { resolve: resolve, reject: reject };
+        readyWaiters.push(w);
+        setTimeout(function () { if (!ready) failAll('worker-gagal', 'Pekerja latar tidak merespons.'); }, 4000);
+      });
+    }
+    return {
+      mode: 'worker',
+      request: async function (type, payload, onStatus) {
+        await whenReady();
+        return new Promise(function (resolve, reject) {
+          var id = nextId++;
+          pending.set(id, { resolve: resolve, reject: reject, onStatus: onStatus });
+          try { worker.postMessage({ id: id, type: type, payload: payload }); }
+          catch (e) { pending.delete(id); reject(Object.assign(new Error('Gagal mengirim file ke pekerja latar.'), { code: 'worker-gagal' })); }
+        });
+      },
+      dispose: function () {
+        failAll('dibatalkan', 'Dibatalkan.');
+        try { worker.terminate(); } catch (e) { /* abaikan */ }
+        try { URL.revokeObjectURL(url); } catch (e2) { /* abaikan */ }
+      }
+    };
+  }
+
+  function mainEngine() {
+    var imp = null;
+    return {
+      mode: 'main',
+      useImporter: function (i) { imp = i; },
+      request: async function (type, payload, onStatus) {
+        if (type === 'load') {
+          imp = new L.Importer({ limits: payload.limits, onStatus: onStatus, yield: function () { return tick(16); } });
+          return imp.load(payload.file);
+        }
+        if (!imp) throw L.ImportError('belum-dimuat', 'Belum ada file yang dimuat.');
+        if (type === 'extract') return imp.extract(payload.ids);
+        return true;
+      },
+      dispose: function () { if (imp) imp.dispose(); imp = null; }
+    };
+  }
+
+  function createEngine(forceMain) {
+    var src = $('worker-source') ? $('worker-source').textContent : '';
+    if (!forceMain && !FORCE_MAIN && window.Worker && window.Blob && window.URL && URL.createObjectURL && src) {
+      try {
+        var url = URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
+        return workerEngine(new Worker(url), url);
+      } catch (e) { /* pakai cadangan */ }
+    }
+    return mainEngine();
+  }
+
+  function teardownEngine() {
+    if (S.engine) { try { S.engine.dispose(); } catch (e) { /* abaikan */ } }
+    S.engine = null;
+  }
+
+  function setStatus(text) { $('busy-status').textContent = text; }
+
+  /* ---------- layar mulai ---------- */
+  function showStartError(e) {
+    var box = $('start-error');
+    var msg = (e && e.message) || 'Terjadi kesalahan.';
+    var extra = null;
+    if (e && (e.code === 'tak-terduga') && /memory|memori|string length|allocation/i.test(msg)) {
+      extra = 'Kemungkinan file terlalu besar untuk memori perangkat ini. Minta ekspor dengan kategori lebih sedikit (cukup Aktivitas), atau coba di komputer.';
+    }
+    box.replaceChildren(
+      h('p', null, h('strong', null, 'Tidak bisa membaca file. '), msg),
+      e && e.detail ? h('p', { class: 'hint' }, 'Detail: ' + e.detail) : null,
+      extra ? h('p', { class: 'hint' }, extra) : null
+    );
+    box.hidden = false;
+    box.scrollIntoView({ block: 'nearest' });
+  }
+
+  async function startImport(file) {
+    $('start-error').hidden = true;
+    var token = ++S.importToken;
+    S.pendingSource = 'file';
+    show('busy');
+    setStatus('Menyiapkan…');
+    teardownEngine();
+    var engine = createEngine(false);
+    S.engine = engine;
+    try {
+      var res;
+      try {
+        res = await engine.request('load', { file: file }, setStatus);
+      } catch (e) {
+        if (e.code === 'worker-gagal' && engine.mode === 'worker' && token === S.importToken) {
+          engine.dispose();
+          engine = createEngine(true);
+          S.engine = engine;
+          setStatus('Memakai mode cadangan (tanpa pekerja latar)…');
+          await tick(30);
+          res = await engine.request('load', { file: file }, setStatus);
+        } else { throw e; }
+      }
+      if (token !== S.importToken) return;
+      S.loaded = res;
+      renderPick(res);
+      show('pick');
+    } catch (err) {
+      if (token !== S.importToken || err.code === 'dibatalkan') return;
+      teardownEngine();
+      show('start');
+      showStartError(err);
+    }
+  }
+
+  async function startDemo(n) {
+    $('start-error').hidden = true;
+    var token = ++S.importToken;
+    S.pendingSource = 'demo';
+    show('busy');
+    setStatus('Membuat data demo fiktif…');
+    await tick(30);
+    teardownEngine();
+    var made = L.demo.makeExport(n, n);
+    // Tanggal demo tetap valid walau jam perangkat salah: 'sekarang' dipatok jauh ke depan.
+    var imp = new L.Importer({ now: Date.UTC(2030, 0, 1) });
+    var eng = mainEngine();
+    eng.useImporter(imp);
+    S.engine = eng;
+    var res = imp.loadObject(made.data, L.demo.LABEL);
+    if (token !== S.importToken) return;
+    S.loaded = res;
+    renderPick(res);
+    show('pick');
+  }
+
+  /* ---------- layar pilih bagian ---------- */
+  function pct(x) { return Math.round(x * 100) + '%'; }
+
+  function candRow(c) {
+    var meta;
+    if (c.empty) meta = 'Bagian ini ada tetapi kosong (0 entri).';
+    else meta = fmtN(c.length) + ' item. Tanggal terbaca di ' + pct(c.dateRate) + ' dari contoh item.' + (S.loaded.docs.length > 1 ? ' File: ' + c.file + '.' : '');
+    var samples = (c.sample || []).map(function (s) {
+      return h('div', { class: 'sample' }, (s.date || 'tanpa tanggal') + ' | ' + (s.link || ('ID ' + s.id)));
+    });
+    return h('label', { class: 'pick' + (c.empty ? ' disabled' : '') },
+      h('input', { type: 'checkbox', value: c.id, disabled: c.empty, onchange: updatePickState }),
+      h('div', null,
+        h('div', { class: 'name' }, h('span', { class: 'tag ' + c.category }, c.categoryLabel), c.pathText),
+        h('div', { class: 'meta' }, meta),
+        samples));
+  }
+
+  function renderPick(res) {
+    var strong = res.candidates.filter(function (c) { return !c.weak && !c.empty && c.category !== 'other'; });
+    var empties = res.candidates.filter(function (c) { return c.empty; });
+    var others = res.candidates.filter(function (c) { return !c.empty && (c.weak || c.category === 'other'); });
+
+    var names = res.docs.map(function (d) { return d.name; }).join(', ');
+    $('pick-intro').textContent = S.pendingSource === 'demo'
+      ? 'Ini data demo fiktif. Perhatikan bahwa Favorit, Disukai, dan Riwayat dipisah; kamu yang memutuskan bagian mana yang dibaca.'
+      : 'File: ' + names + '. Ditemukan ' + strong.length + ' bagian yang tampak seperti daftar video. Favorit, Disukai, dan Riwayat tidak dicampur otomatis.';
+
+    $('pick-warnings').replaceChildren.apply($('pick-warnings'), res.warnings.map(function (w) { return h('p', { class: 'note warn' }, w); }));
+
+    var empty = $('pick-empty');
+    if (strong.length === 0) {
+      empty.hidden = false;
+      empty.replaceChildren(h('p', null, empties.length
+        ? 'Bagian video ditemukan, tetapi kosong. Mungkin kamu belum menyimpan video, atau ekspor ini tidak menyertakan Favorit.'
+        : 'Struktur file ini tidak dikenali sebagai daftar video TikTok. Tidak ada data yang dikirim ke mana pun. Lihat struktur file di bawah; kamu juga bisa mencoba bagian lain secara manual.'));
+    } else {
+      empty.hidden = true;
+    }
+
+    $('pick-list').replaceChildren.apply($('pick-list'), strong.concat(empties).map(candRow));
+    var more = $('pick-more');
+    more.hidden = others.length === 0;
+    $('pick-more-list').replaceChildren.apply($('pick-more-list'), others.map(candRow));
+    more.open = strong.length === 0 && others.length > 0;
+
+    $('outline-text').textContent = res.outline;
+    $('pick-outline').open = strong.length === 0;
+
+    var favs = strong.filter(function (c) { return c.category === 'favorite'; });
+    if (favs.length === 1) {
+      var box = document.querySelector('#pick-list input[value="' + favs[0].id + '"]');
+      if (box) box.checked = true;
+    }
+    $('chk-mix').checked = false;
+    updatePickState();
+  }
+
+  function selectedIds() {
+    return Array.prototype.map.call(document.querySelectorAll('#screen-pick input[type=checkbox][value]:checked'), function (i) { return i.value; });
+  }
+
+  function updatePickState() {
+    var ids = selectedIds();
+    var cands = ids.map(function (id) { return S.loaded.candidates.filter(function (c) { return c.id === id; })[0]; });
+    var cats = {};
+    cands.forEach(function (c) { cats[c.category] = c.categoryLabel; });
+    var catKeys = Object.keys(cats);
+    var mix = catKeys.length > 1;
+    var nonFav = cands.filter(function (c) { return c.category !== 'favorite'; });
+    var box = $('pick-mix');
+    var mixLabel = $('chk-mix').closest('label');
+    if (mix) {
+      box.hidden = false; mixLabel.hidden = false;
+      $('pick-mix-text').textContent = 'Kamu memilih bagian dengan jenis berbeda (' + catKeys.map(function (k) { return cats[k]; }).join(', ') + '). Daftar akan menggabungkannya, dan tiap kartu diberi label bagian asalnya.';
+    } else if (nonFav.length) {
+      box.hidden = false; mixLabel.hidden = true;
+      $('pick-mix-text').textContent = 'Bagian ini berjenis "' + nonFav[0].categoryLabel + '", bukan Favorit. Pastikan ini yang kamu mau.';
+    } else {
+      box.hidden = true; mixLabel.hidden = true;
+      $('chk-mix').checked = false;
+    }
+    $('btn-pick-go').disabled = ids.length === 0 || (mix && !$('chk-mix').checked);
+    $('btn-pick-go').textContent = ids.length > 1 ? 'Tampilkan ' + ids.length + ' bagian' : 'Tampilkan daftar';
+  }
+
+  async function goExtract() {
+    var ids = selectedIds();
+    if (!ids.length || !S.engine) return;
+    var token = ++S.importToken;
+    show('busy');
+    setStatus('Membaca entri dari bagian terpilih…');
+    await tick(30);
+    try {
+      var res = await S.engine.request('extract', { ids: ids }, setStatus);
+      if (token !== S.importToken) return;
+      var warnings = S.loaded ? S.loaded.warnings : [];
+      teardownEngine(); // bebaskan memori JSON mentah
+      S.loaded = null;
+      useDataset({ entries: res.entries, stats: res.stats, sections: res.sections, source: S.pendingSource, warnings: warnings });
+    } catch (e) {
+      if (token !== S.importToken || e.code === 'dibatalkan') return;
+      show('pick');
+      toast(e.message || 'Gagal membaca bagian yang dipilih.', 5000);
+    }
+  }
+
+  /* ---------- memuat dataset ke layar daftar ---------- */
+  function useDataset(ds) {
+    S.entries = ds.entries;
+    S.stats = ds.stats;
+    S.sections = ds.sections;
+    S.source = ds.source;
+    S.warnings = ds.warnings || [];
+    S.hasDates = ds.entries.some(function (e) { return e.ts !== null; });
+    var d = L.view.dupStats(ds.entries);
+    S.dupCounts = d.counts;
+    S.dupInfo = { groups: d.groups, extraCopies: d.extraCopies };
+    S.fp = L.view.fingerprint(ds.entries, ds.sections.map(function (s) { return s.name; }));
+    S.bookmarks = L.store.loadBookmarks();
+    S.resumed = false;
+
+    var settings = L.store.loadSettings();
+    S.f = Object.assign({}, DEFAULT_F, {
+      order: S.hasDates ? 'saved-asc' : 'file-asc',
+      pageSize: [25, 50, 100].indexOf(settings.pageSize) >= 0 ? settings.pageSize : 50
+    });
+
+    var anchor = null, pagePos = null;
+    if (S.source !== 'demo') {
+      var pos = L.store.loadPosition(S.fp);
+      if (pos && typeof pos === 'object') {
+        if (L.view.ORDERS.indexOf(pos.order) >= 0 && (S.hasDates || pos.order.indexOf('file') === 0)) S.f.order = pos.order;
+        if ([25, 50, 100].indexOf(pos.pageSize) >= 0) S.f.pageSize = pos.pageSize;
+        if (typeof pos.query === 'string') S.f.query = pos.query.slice(0, 200);
+        if (/^\d{4}-\d{2}-\d{2}$/.test(pos.from || '')) S.f.from = pos.from;
+        if (/^\d{4}-\d{2}-\d{2}$/.test(pos.to || '')) S.f.to = pos.to;
+        if (['end', 'hide', 'only'].indexOf(pos.undated) >= 0) S.f.undated = pos.undated;
+        S.f.dedupe = pos.dedupe === true;
+        S.f.onlyBm = pos.onlyBm === true;
+        anchor = typeof pos.anchorKey === 'string' ? pos.anchorKey : null;
+        pagePos = Number(pos.page) || 1;
+      }
+    }
+    syncControls();
+    show('list');
+    applyView({ anchorKey: anchor, page: pagePos });
+    if (anchor && S.f.page > 1) {
+      S.resumed = true;
+      $('resume-text').textContent = 'Melanjutkan dari halaman ' + fmtN(S.f.page) + ', tempat terakhir kamu berhenti.';
+      $('resume-note').hidden = false;
+    } else {
+      $('resume-note').hidden = true;
+    }
+  }
+
+  function countBookmarksInList() {
+    var n = 0;
+    for (var i = 0; i < S.entries.length; i++) if (S.bookmarks.has(S.entries[i].key)) n++;
+    return n;
+  }
+
+  function syncControls() {
+    var f = S.f;
+    $('h-list').textContent = S.source === 'demo' ? 'Video tersimpan (demo)' : 'Video tersimpan';
+    $('demo-badge').hidden = S.source !== 'demo';
+    $('list-sections').textContent = S.sections.map(function (s) { return s.name + ' (' + s.categoryLabel + ')'; }).join(' + ');
+    var sel = $('sel-order');
+    Array.prototype.forEach.call(sel.options, function (o) { o.disabled = !S.hasDates && o.value.indexOf('saved') === 0; });
+    sel.value = f.order;
+    $('inp-search').value = f.query;
+    $('inp-from').value = f.from;
+    $('inp-to').value = f.to;
+    $('sel-undated').value = f.undated;
+    $('sel-size').value = String(f.pageSize);
+    var dd = $('chk-dedupe');
+    dd.checked = f.dedupe;
+    dd.disabled = S.dupInfo.extraCopies === 0;
+    $('dedupe-label').textContent = S.dupInfo.extraCopies === 0
+      ? 'Sembunyikan duplikat (tidak ada duplikat)'
+      : 'Sembunyikan duplikat (' + fmtN(S.dupInfo.extraCopies) + ' salinan ekstra dari ' + fmtN(S.dupInfo.groups) + ' video)';
+    $('chk-bm').checked = f.onlyBm;
+    updateBmLabel();
+    var saveBox = $('chk-save-list');
+    saveBox.disabled = S.source === 'demo';
+    saveBox.checked = !!(S.savedMeta && S.savedMeta.fp === S.fp) || S.source === 'saved';
+    $('save-list-note').textContent = S.source === 'demo'
+      ? 'Data demo tidak bisa disimpan.'
+      : 'Jika dinyalakan, daftar disimpan di browser ini (IndexedDB) supaya tidak perlu impor ulang. Siapa pun yang memakai HP dan profil browser ini bisa melihatnya. Matikan untuk menghapusnya.';
+  }
+
+  function updateBmLabel() {
+    $('bm-label').textContent = 'Hanya yang ditandai (' + fmtN(countBookmarksInList()) + ' di daftar ini)';
+  }
+
+  /* ---------- daftar: tampilan ---------- */
+  function applyView(opts) {
+    opts = opts || {};
+    var f = S.f;
+    var fromTs = L.date.dayBound(f.from, false), toTs = L.date.dayBound(f.to, true);
+    var err = $('date-error');
+    if (fromTs !== null && toTs !== null && fromTs > toTs) {
+      err.hidden = false;
+      err.textContent = 'Tanggal awal lebih akhir daripada tanggal akhir, jadi filter tanggal diabaikan.';
+      fromTs = toTs = null;
+    } else {
+      err.hidden = true;
+    }
+    S.view = L.view.buildView(S.entries, {
+      order: f.order, query: f.query, fromTs: fromTs, toTs: toTs, undated: f.undated,
+      dedupe: f.dedupe, onlyBookmarks: f.onlyBm, bookmarks: S.bookmarks
+    });
+    if (opts.anchorKey) {
+      var idx = -1;
+      for (var i = 0; i < S.view.list.length; i++) if (S.view.list[i].key === opts.anchorKey) { idx = i; break; }
+      if (idx >= 0) f.page = Math.floor(idx / f.pageSize) + 1;
+      else if (opts.page) f.page = opts.page;
+    } else if (opts.page) {
+      f.page = opts.page;
+    }
+    renderPage();
+  }
+
+  function orderNote() {
+    var f = S.f;
+    if (!S.hasDates) return 'Tidak ada tanggal yang valid di bagian ini, jadi urutannya hanya bisa menurut urutan dalam file. Urutan itu belum tentu kronologis.';
+    if (f.order.indexOf('saved') === 0) {
+      return 'Menurut tanggal DISIMPAN di file, bukan tanggal video diposting. Entri tanpa tanggal ada di akhir.' +
+        (S.stats && S.stats.postedDateIgnored ? ' Kolom tanggal posting tidak dipakai.' : '');
+    }
+    return 'Urutan dalam file. Urutan ini belum tentu kronologis; pakai "Tanggal DISIMPAN" untuk urutan waktu.';
+  }
+
+  function renderPage() {
+    var v = S.view, f = S.f;
+    var pg = L.view.paginate(v.total, f.pageSize, f.page);
+    f.page = pg.page;
+
+    $('order-note').textContent = orderNote();
+    $('list-summary').textContent = v.total === 0
+      ? 'Tidak ada entri untuk ditampilkan'
+      : 'Menampilkan ' + fmtN(pg.start + 1) + '–' + fmtN(pg.end) + ' dari ' + fmtN(v.total) + ' entri';
+
+    var ex = [];
+    if (v.dupHidden) ex.push(fmtN(v.dupHidden) + ' duplikat disembunyikan');
+    if (v.excluded.search) ex.push(fmtN(v.excluded.search) + ' tidak cocok dengan pencarian');
+    if (v.excluded.date) ex.push(fmtN(v.excluded.date) + ' di luar rentang tanggal');
+    if (v.excluded.undated) ex.push(fmtN(v.excluded.undated) + ' disaring menurut tanggal ada/tidak');
+    if (v.excluded.bookmarks) ex.push(fmtN(v.excluded.bookmarks) + ' tidak ditandai');
+    $('list-excluded').textContent = ex.length
+      ? 'Tidak ditampilkan: ' + ex.join(', ') + '. Total entri valid: ' + fmtN(S.entries.length) + '.'
+      : 'Total entri valid: ' + fmtN(S.entries.length) + '.';
+
+    var empty = $('empty-state');
+    if (S.entries.length === 0) {
+      empty.hidden = false;
+      empty.replaceChildren(
+        h('h3', null, 'Tidak ada entri valid'),
+        h('p', null, 'Bagian yang dipilih tidak menghasilkan entri yang bisa dipakai. Buka Rincian impor untuk melihat alasannya, lalu coba bagian lain.'),
+        h('button', { class: 'btn small', type: 'button', onclick: openStats }, 'Buka rincian impor'));
+    } else if (v.total === 0) {
+      empty.hidden = false;
+      empty.replaceChildren(
+        h('h3', null, 'Tidak ada yang cocok'),
+        h('p', null, 'Tidak ada entri yang cocok dengan filter saat ini.'),
+        h('button', { class: 'btn small', type: 'button', onclick: resetFilters }, 'Atur ulang filter'));
+    } else {
+      empty.hidden = true;
+    }
+
+    var frag = document.createDocumentFragment();
+    var dated = f.order.indexOf('saved') === 0;
+    var multi = S.sections.length > 1;
+    var last = null;
+    for (var i = pg.start; i < pg.end; i++) {
+      var e = v.list[i];
+      var g = dated ? (e.ts === null ? 'x' : L.date.parts(e.ts).monthKey) : (multi ? 's' + e.src : 'all');
+      if (g !== last) { if (dated || multi) frag.append(dividerFor(e, dated)); last = g; }
+      frag.append(cardFor(e, i, dated));
+    }
+    $('cards').replaceChildren(frag);
+
+    $('pg-input').value = String(pg.page);
+    $('pg-input').max = String(pg.pages);
+    $('pg-total').textContent = '/ ' + fmtN(pg.pages);
+    $('pg-first').disabled = $('pg-prev').disabled = pg.page <= 1;
+    $('pg-next').disabled = $('pg-last').disabled = pg.page >= pg.pages;
+    $('pager').hidden = S.screen !== 'list' || v.total === 0;
+    schedulePositionSave();
+  }
+
+  function dividerFor(e, dated) {
+    var label;
+    if (!dated) label = h('span', null, S.sections[e.src] ? S.sections[e.src].name : 'Bagian');
+    else if (e.ts === null) label = h('span', null, 'Tanpa tanggal');
+    else { var p = L.date.parts(e.ts); label = [p.monthLong + ' ', h('span', null, String(p.year))]; }
+    return h('li', { class: 'divider' }, h('div', { class: 'spine', 'aria-hidden': 'true' }), h('h3', { class: 'label' }, label));
+  }
+
+  function shortLink(url) {
+    try {
+      var u = new URL(url);
+      var s = u.host + u.pathname.replace(/\/$/, '');
+      return s.length > 90 ? s.slice(0, 90) + '…' : s;
+    } catch (e) { return ''; }
+  }
+
+  function cardFor(e, i, dated) {
+    var li = h('li', { class: 'card' + (e.ts === null ? ' undated' : '') });
+    var spine = h('div', { class: 'spine' });
+    if (dated) {
+      if (e.ts !== null) {
+        var p = L.date.parts(e.ts);
+        spine.append(h('span', { class: 'day' }, String(p.day)), h('span', { class: 'my' }, p.month + ' ' + p.year), h('span', { class: 'tm' }, p.time));
+      } else {
+        spine.append(h('span', { class: 'nodate' }, e.dateState === 'invalid' ? 'Tanggal tidak valid' : 'Tanggal tidak tersedia'));
+      }
+    } else {
+      spine.append(h('span', { class: 'filepos' }, '#' + fmtN(e.pos + 1)), h('span', { class: 'filepos-label' }, 'urutan di file'));
+    }
+
+    var pills = [];
+    if (S.source === 'demo') pills.push(h('span', { class: 'pill dup' }, 'DEMO'));
+    var copies = S.dupCounts ? S.dupCounts[e.key] : 1;
+    if (copies > 1) pills.push(h('span', { class: 'pill dup' }, S.f.dedupe ? '+' + (copies - 1) + ' duplikat disembunyikan' : 'Ada ' + copies + ' salinan'));
+    if (S.sections.length > 1 && S.sections[e.src]) pills.push(h('span', { class: 'pill' }, S.sections[e.src].categoryLabel));
+
+    var body = h('div', { class: 'card-body' },
+      h('p', { class: 'card-title' }, e.author ? '@' + e.author : 'Video TikTok', pills, h('span', { class: 'rank' }, '#' + fmtN(i + 1))));
+    if (e.desc) body.append(h('p', { class: 'card-desc' }, e.desc));
+
+    var meta = [];
+    if (e.id) meta.push('ID ' + e.id);
+    if (e.url) meta.push(shortLink(e.url));
+    if (!dated && e.ts !== null) meta.push('Disimpan ' + L.date.formatDate(e.ts));
+    if (meta.length) body.append(h('p', { class: 'card-meta' }, meta.join('\n')));
+    if (e.dateState === 'invalid') body.append(h('p', { class: 'card-warn' }, 'Tanggal di file tidak valid: "' + (e.dateRaw || '') + '". Entri ini tidak diurutkan menurut tanggal.'));
+    else if (e.dateState === 'missing' && !dated) body.append(h('p', { class: 'card-warn' }, 'Tanggal tidak tersedia di file.'));
+    if (!e.url) body.append(h('p', { class: 'card-warn' }, 'Tautan tidak tersedia di file; hanya ID video.'));
+
+    body.append(h('div', { class: 'actions' }, openButton(e),
+      h('button', { class: 'btn', type: 'button', onclick: function () { copyLink(e); } }, 'Salin tautan'),
+      markButton(e)));
+    li.append(spine, body);
+    return li;
+  }
+
+  function openButton(e) {
+    if (S.source === 'demo') {
+      return h('button', { class: 'btn primary open', type: 'button', 'aria-disabled': 'true', onclick: function () { toast('Ini data demo: tautannya fiktif, jadi tidak dibuka.'); } }, 'Buka di TikTok');
+    }
+    var p = e.url ? L.url.parseTikTokUrl(e.url) : null; // validasi ulang saat tampil
+    if (p && p.ok) {
+      return h('a', { class: 'btn primary open', href: p.href, target: '_blank', rel: 'noopener noreferrer' }, 'Buka di TikTok');
+    }
+    return h('button', { class: 'btn primary open', type: 'button', 'aria-disabled': 'true', onclick: function () { toast('Tidak ada tautan aman untuk dibuka.'); } }, 'Tautan tidak tersedia');
+  }
+
+  function markButton(e) {
+    var on = S.bookmarks.has(e.key);
+    return h('button', {
+      class: 'btn mark', type: 'button', 'aria-pressed': on ? 'true' : 'false',
+      onclick: function (ev) { toggleBookmark(e, ev.currentTarget); }
+    }, on ? 'Ditandai' : 'Tandai');
+  }
+
+  function toggleBookmark(e, btn) {
+    var on = !S.bookmarks.has(e.key);
+    if (on) S.bookmarks.add(e.key); else S.bookmarks.delete(e.key);
+    var r = L.store.saveBookmarks(S.bookmarks);
+    if (!r.ok) toast('Penanda tidak tersimpan: ' + r.message + ' Ekspor penanda sebagai cadangan.', 5000);
+    updateBmLabel();
+    if (S.f.onlyBm && !on) { applyView(); return; }
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? 'Ditandai' : 'Tandai';
+  }
+
+  function copyLink(e) {
+    if (e.url) copyWithFallback(e.url, 'Tautan disalin.');
+    else if (e.id) copyWithFallback(e.id, 'ID video disalin (tidak ada tautan di file).');
+    else toast('Tidak ada yang bisa disalin.');
+  }
+
+  /* ---------- posisi terakhir ---------- */
+  var posTimer = null, posWarned = false;
+  function schedulePositionSave() {
+    if (S.source === 'demo' || !S.entries.length || S.screen !== 'list') return;
+    clearTimeout(posTimer);
+    posTimer = setTimeout(savePositionNow, 400);
+  }
+  function savePositionNow() {
+    if (S.screen !== 'list' || S.source === 'demo' || !S.view || !S.entries.length) return;
+    var f = S.f;
+    var first = S.view.list[(f.page - 1) * f.pageSize];
+    var r = L.store.savePosition(S.fp, {
+      order: f.order, pageSize: f.pageSize, page: f.page, anchorKey: first ? first.key : null,
+      query: f.query, from: f.from, to: f.to, undated: f.undated, dedupe: f.dedupe, onlyBm: f.onlyBm, at: Date.now()
+    });
+    if (!r.ok && !posWarned) { posWarned = true; toast('Posisi terakhir tidak bisa disimpan: ' + r.message, 5000); }
+  }
+
+  /* ---------- kontrol ---------- */
+  function goPage(p) {
+    S.f.page = p;
+    renderPage();
+    $('list-summary').scrollIntoView({ block: 'start' });
+  }
+
+  function resetFilters() {
+    var f = S.f;
+    f.query = ''; f.from = ''; f.to = ''; f.undated = 'end'; f.dedupe = false; f.onlyBm = false; f.page = 1;
+    syncControls();
+    applyView();
+  }
+
+  function wireControls() {
+    $('sel-order').addEventListener('change', function (e) { S.f.order = e.target.value; S.f.page = 1; S.resumed = false; $('resume-note').hidden = true; applyView(); });
+    var searchTimer = null;
+    $('inp-search').addEventListener('input', function (e) {
+      clearTimeout(searchTimer);
+      var val = e.target.value;
+      searchTimer = setTimeout(function () { S.f.query = val.slice(0, 200); S.f.page = 1; applyView(); }, 220);
+    });
+    $('inp-from').addEventListener('change', function (e) { S.f.from = e.target.value; S.f.page = 1; applyView(); });
+    $('inp-to').addEventListener('change', function (e) { S.f.to = e.target.value; S.f.page = 1; applyView(); });
+    $('sel-undated').addEventListener('change', function (e) { S.f.undated = e.target.value; S.f.page = 1; applyView(); });
+    $('chk-dedupe').addEventListener('change', function (e) { S.f.dedupe = e.target.checked; S.f.page = 1; applyView(); });
+    $('chk-bm').addEventListener('change', function (e) { S.f.onlyBm = e.target.checked; S.f.page = 1; applyView(); });
+    $('sel-size').addEventListener('change', function (e) {
+      var first = S.view && S.view.list[(S.f.page - 1) * S.f.pageSize];
+      S.f.pageSize = Number(e.target.value);
+      saveSetting('pageSize', S.f.pageSize);
+      applyView({ anchorKey: first ? first.key : null });
+    });
+    $('btn-filter-reset').addEventListener('click', resetFilters);
+    $('btn-resume-reset').addEventListener('click', function () {
+      S.f.order = S.hasDates ? 'saved-asc' : 'file-asc';
+      resetFilters();
+      $('resume-note').hidden = true;
+    });
+
+    $('pg-first').addEventListener('click', function () { goPage(1); });
+    $('pg-prev').addEventListener('click', function () { goPage(S.f.page - 1); });
+    $('pg-next').addEventListener('click', function () { goPage(S.f.page + 1); });
+    $('pg-last').addEventListener('click', function () { goPage(Infinity); });
+    function jump() {
+      var n = parseInt($('pg-input').value, 10);
+      if (!isFinite(n)) { renderPage(); return; }
+      goPage(n);
+    }
+    $('pg-input').addEventListener('change', jump);
+    $('pg-input').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); jump(); e.target.blur(); } });
+    $('pg-input').addEventListener('focus', function (e) { e.target.select(); });
+  }
+
+  /* ---------- rincian impor ---------- */
+  function statRow(dl, label, value) { dl.append(h('dt', null, label), h('dd', null, String(value))); }
+
+  function openStats() {
+    var st = S.stats;
+    var body = $('stats-body');
+    if (!st) { body.replaceChildren(h('p', null, 'Belum ada data.')); $('dlg-stats').showModal(); return; }
+    var dl = h('dl', { class: 'stat-grid' });
+    statRow(dl, 'Entri ditemukan di bagian terpilih', fmtN(st.found));
+    statRow(dl, 'Valid (tautan TikTok yang aman, atau ID video)', fmtN(st.valid));
+    statRow(dl, 'Gagal dibaca', fmtN(st.failed));
+    statRow(dl, 'Tanggal terbaca', fmtN(st.dates.ok));
+    statRow(dl, 'Tanggal tidak ada', fmtN(st.dates.missing));
+    statRow(dl, 'Tanggal tidak valid', fmtN(st.dates.invalid));
+    statRow(dl, 'Video dengan duplikat', fmtN(S.dupInfo.groups));
+    statRow(dl, 'Salinan duplikat ekstra', fmtN(S.dupInfo.extraCopies));
+    var nodes = [
+      h('h3', null, 'Sumber'),
+      h('p', null, S.sections.map(function (s) { return s.name + ' (' + s.categoryLabel + ')'; }).join(' + ') || '-'),
+      h('h3', null, 'Hitungan'),
+      dl,
+      h('p', { class: 'hint' }, 'Duplikat tidak pernah dibuang diam-diam: kamu memilih sendiri apakah disembunyikan di filter.')
+    ];
+    var reasons = Object.keys(st.failReasons);
+    if (reasons.length) {
+      nodes.push(h('h3', null, 'Penyebab gagal'));
+      var rl = h('dl', { class: 'stat-grid' });
+      reasons.forEach(function (r) { statRow(rl, L.url.REASONS[r] || r, fmtN(st.failReasons[r])); });
+      nodes.push(rl);
+      if (st.failSamples && st.failSamples.length) {
+        nodes.push(h('h3', null, 'Contoh entri gagal (maks. ' + st.failSamples.length + ')'));
+        nodes.push(h('ul', { class: 'fail-list' }, st.failSamples.map(function (s) {
+          var sec = S.sections.length > 1 && S.sections[s.src] ? ' [' + S.sections[s.src].name + ']' : '';
+          return h('li', null, h('b', null, '#' + fmtN(s.pos + 1) + sec + ' ' + (L.url.REASONS[s.reason] || s.reason)), ' ' + s.preview);
+        })));
+      }
+    }
+    if (st.postedDateIgnored) nodes.push(h('p', { class: 'note' }, 'File memuat kolom tanggal posting (mis. create_time). Kolom itu tidak dipakai, karena yang diurutkan adalah tanggal disimpan.'));
+    (S.warnings || []).forEach(function (w) { nodes.push(h('p', { class: 'note warn' }, w)); });
+    body.replaceChildren.apply(body, nodes);
+    $('dlg-stats').showModal();
+  }
+
+  /* ---------- penyimpanan, penanda, hapus ---------- */
+  async function refreshSavedBanner() {
+    var meta = await L.store.peekList();
+    S.savedMeta = meta;
+    var box = $('saved-banner');
+    if (!meta) { box.hidden = true; return; }
+    var when = new Date(meta.savedAt).toLocaleString('id-ID');
+    var names = (meta.sections || []).map(function (s) { return s.name; }).join(' + ');
+    $('saved-banner-text').textContent = 'Ada daftar tersimpan di perangkat ini: ' + fmtN(meta.count) + ' entri dari "' + names + '", disimpan ' + when + '.';
+    box.hidden = false;
+  }
+
+  async function openSaved() {
+    var token = ++S.importToken;
+    S.pendingSource = 'saved';
+    show('busy');
+    setStatus('Membuka daftar tersimpan…');
+    try {
+      var r = await L.store.loadList();
+      if (token !== S.importToken) return;
+      if (!r) throw new Error('Daftar tersimpan tidak ditemukan.');
+      var stats = r.meta.stats || L.extract.newStats();
+      useDataset({ entries: r.entries, stats: stats, sections: r.meta.sections || [], source: 'saved', warnings: [] });
+    } catch (e) {
+      if (token !== S.importToken) return;
+      show('start');
+      showStartError(e);
+    }
+  }
+
+  async function onSaveListToggle(ev) {
+    var box = ev.target;
+    if (box.checked) {
+      box.disabled = true;
+      toast('Menyimpan daftar…', 8000);
+      try {
+        await L.store.saveList(S.entries, { fp: S.fp, sections: S.sections, stats: S.stats });
+        var persisted = await L.store.requestPersist();
+        S.savedMeta = await L.store.peekList();
+        var est = await L.store.estimate();
+        toast('Daftar disimpan di perangkat ini.' + (est && est.usage ? ' Pemakaian penyimpanan browser: ' + (est.usage / 1048576).toFixed(1) + ' MB.' : '') + (persisted ? '' : ' Browser belum menjamin data ini tidak dihapus.'), 6000);
+      } catch (e) {
+        box.checked = false;
+        toast(e.message, 7000);
+      }
+      box.disabled = false;
+    } else {
+      try {
+        await L.store.deleteList();
+        S.savedMeta = null;
+        toast('Daftar tersimpan dihapus dari perangkat ini.');
+      } catch (e2) {
+        box.checked = true;
+        toast(e2.message, 6000);
+      }
+    }
+  }
+
+  function exportBookmarks() {
+    var keys = Array.from(S.bookmarks);
+    var blob = new Blob([JSON.stringify({ format: 'simpanan-lawas-penanda', version: 1, keys: keys }, null, 1)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = h('a', { href: url, download: 'penanda-simpanan-lawas.json' });
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+    toast(fmtN(keys.length) + ' penanda diekspor.');
+  }
+
+  async function importBookmarks(file) {
+    try {
+      if (file.size > 20 * 1048576) throw new Error('File terlalu besar untuk berkas penanda.');
+      var data = JSON.parse(await file.text());
+      if (!data || data.format !== 'simpanan-lawas-penanda' || !Array.isArray(data.keys)) throw new Error('Bukan berkas penanda dari aplikasi ini.');
+      var added = 0;
+      data.keys.slice(0, 200000).forEach(function (k) {
+        if (typeof k === 'string' && k.length <= 400 && /^(id|url):/.test(k) && !S.bookmarks.has(k)) { S.bookmarks.add(k); added++; }
+      });
+      var r = L.store.saveBookmarks(S.bookmarks);
+      if (!r.ok) toast('Penanda ditambahkan tetapi tidak tersimpan: ' + r.message, 5000);
+      else toast(fmtN(added) + ' penanda baru diimpor.');
+      updateBmLabel();
+      if (S.screen === 'list') applyView();
+    } catch (e) {
+      toast('Gagal impor penanda: ' + e.message, 5000);
+    }
+  }
+
+  function resetState() {
+    S.importToken++;
+    teardownEngine();
+    S.loaded = null; S.entries = []; S.stats = null; S.sections = []; S.view = null; S.f = null;
+    S.bookmarks = new Set(); S.savedMeta = null; S.dupCounts = null;
+  }
+
+  async function wipeAll() {
+    var ok = await confirmDialog({
+      title: 'Hapus semua data lokal?',
+      body: 'Ini menghapus penanda, posisi terakhir, pengaturan, dan daftar tersimpan di browser ini. File ekspor di perangkatmu tidak ikut terhapus; hapus sendiri dari folder Unduhan jika perlu.',
+      ok: 'Hapus semua'
+    });
+    if (!ok) return;
+    var rep = await L.store.wipeAll();
+    resetState();
+    applyTheme('dark');
+    show('start');
+    await refreshSavedBanner();
+    toast('Data lokal dihapus (' + rep.localKeys + ' item pengaturan; IndexedDB: ' + rep.indexedDb + ').', 5000);
+  }
+
+  /* ---------- tema ---------- */
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', t === 'light' ? '#eef2f4' : '#0e171d');
+  }
+
+  /* ---------- inisialisasi ---------- */
+  function init() {
+    applyTheme(L.store.loadSettings().theme === 'light' ? 'light' : 'dark');
+    wireControls();
+
+    $('btn-theme').addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      saveSetting('theme', next);
+    });
+    $('btn-privacy').addEventListener('click', function () { $('dlg-privacy').showModal(); });
+    $('btn-privacy-close').addEventListener('click', function () { $('dlg-privacy').close(); });
+    $('btn-stats-close').addEventListener('click', function () { $('dlg-stats').close(); });
+    $('btn-copy-close').addEventListener('click', function () { $('dlg-copy').close(); });
+    $('btn-stats').addEventListener('click', openStats);
+
+    $('file-input').addEventListener('change', function (e) {
+      var file = e.target.files && e.target.files[0];
+      e.target.value = '';
+      if (file) startImport(file);
+    });
+    var dz = $('dropzone');
+    ['dragenter', 'dragover'].forEach(function (n) { dz.addEventListener(n, function (e) { e.preventDefault(); dz.classList.add('over'); }); });
+    dz.addEventListener('dragleave', function () { dz.classList.remove('over'); });
+    dz.addEventListener('drop', function (e) {
+      e.preventDefault();
+      dz.classList.remove('over');
+      var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) startImport(file);
+    });
+    window.addEventListener('dragover', function (e) { e.preventDefault(); });
+    window.addEventListener('drop', function (e) { e.preventDefault(); });
+
+    $('btn-demo-small').addEventListener('click', function () { startDemo(300); });
+    $('btn-demo-big').addEventListener('click', function () { startDemo(15000); });
+    $('btn-cancel').addEventListener('click', function () { S.importToken++; teardownEngine(); show('start'); });
+    $('btn-pick-back').addEventListener('click', function () { S.importToken++; teardownEngine(); S.loaded = null; show('start'); });
+    $('btn-pick-go').addEventListener('click', goExtract);
+    $('chk-mix').addEventListener('change', updatePickState);
+    $('btn-copy-outline').addEventListener('click', function () { copyWithFallback($('outline-text').textContent, 'Struktur disalin. Isinya hanya nama kunci dan pola, tanpa data asli.'); });
+
+    $('btn-open-saved').addEventListener('click', openSaved);
+    $('btn-delete-saved').addEventListener('click', async function () {
+      var ok = await confirmDialog({ title: 'Hapus daftar tersimpan?', body: 'Daftar yang disimpan di perangkat ini akan dihapus. Kamu bisa mengimpor file ekspor lagi kapan saja.', ok: 'Hapus daftar' });
+      if (!ok) return;
+      try { await L.store.deleteList(); toast('Daftar tersimpan dihapus.'); } catch (e) { toast(e.message, 5000); }
+      refreshSavedBanner();
+    });
+    $('chk-save-list').addEventListener('change', onSaveListToggle);
+    $('btn-bm-export').addEventListener('click', exportBookmarks);
+    $('bm-import').addEventListener('change', function (e) {
+      var file = e.target.files && e.target.files[0];
+      e.target.value = '';
+      if (file) importBookmarks(file);
+    });
+    $('btn-new-file').addEventListener('click', function () { savePositionNow(); resetState(); show('start'); refreshSavedBanner(); });
+    $('btn-wipe').addEventListener('click', wipeAll);
+
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') savePositionNow(); });
+    window.addEventListener('pagehide', savePositionNow);
+
+    show('start');
+    refreshSavedBanner();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+<script type="text/plain" id="worker-source">/*
+ * url.js — validasi tautan TikTok.
+ *
+ * Aturan (semuanya lewat URL parser bawaan, bukan pencocokan teks):
+ *  - protokol harus https:
+ *  - tidak boleh ada user:password@ di dalam URL
+ *  - tidak boleh ada port khusus
+ *  - hostname harus persis domain TikTok atau subdomain-nya, bukan sekadar
+ *    "mengandung kata tiktok" (tiktok.com.evil.net dan eviltiktok.com ditolak)
+ *
+ * Kalau file ekspor-mu memakai domain TikTok lain dan semua entri ditolak dengan
+ * alasan "domain bukan TikTok", tambahkan domain itu di ALLOWED_DOMAINS di bawah.
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  var ALLOWED_DOMAINS = ['tiktok.com', 'tiktokv.com'];
+
+  var REASONS = {
+    'bukan-teks': 'Tautan bukan teks',
+    'kosong': 'Tautan kosong',
+    'terlalu-panjang': 'Tautan terlalu panjang',
+    'karakter-tidak-valid': 'Tautan mengandung spasi atau karakter kontrol',
+    'bukan-url': 'Bukan URL yang valid',
+    'bukan-https': 'Bukan HTTPS (mis. http:, javascript:, data:)',
+    'berisi-kredensial': 'URL mengandung user:password@',
+    'port-tidak-standar': 'URL memakai port khusus',
+    'domain-bukan-tiktok': 'Domain bukan TikTok',
+    'tanpa-tautan-atau-id': 'Tidak ada tautan maupun ID video',
+    'bukan-objek': 'Item bukan objek/teks yang bisa dibaca'
+  };
+
+  function fail(reason) {
+    return { ok: false, reason: reason };
+  }
+
+  function hostAllowed(host) {
+    for (var i = 0; i < ALLOWED_DOMAINS.length; i++) {
+      var d = ALLOWED_DOMAINS[i];
+      if (host === d || host.slice(-(d.length + 1)) === '.' + d) return true;
+    }
+    return false;
+  }
+
+  // /video/123, /photo/123, /v/123, /v/123.html
+  var ID_RE = /\/(?:video|photo|v)\/(\d{5,30})(?=[\/.]|$)/;
+  var AUTHOR_RE = /^\/@([A-Za-z0-9._-]{1,64})(?=\/|$)/;
+
+  function parseTikTokUrl(input) {
+    if (typeof input !== 'string') return fail('bukan-teks');
+    var s = input.trim();
+    if (!s) return fail('kosong');
+    if (s.length > 2048) return fail('terlalu-panjang');
+    if (/[\u0000-\u001f\u007f\s]/.test(s)) return fail('karakter-tidak-valid');
+    var u;
+    try {
+      u = new URL(s);
+    } catch (e) {
+      return fail('bukan-url');
+    }
+    if (u.protocol !== 'https:') return fail('bukan-https');
+    if (u.username || u.password) return fail('berisi-kredensial');
+    if (u.port) return fail('port-tidak-standar');
+    var host = u.hostname.toLowerCase();
+    if (!hostAllowed(host)) return fail('domain-bukan-tiktok');
+
+    var idMatch = ID_RE.exec(u.pathname);
+    var authorMatch = AUTHOR_RE.exec(u.pathname);
+    var id = idMatch ? idMatch[1] : null;
+    var path = u.pathname.replace(/\/+$/, '');
+    return {
+      ok: true,
+      href: u.href,
+      host: host,
+      id: id,
+      author: authorMatch ? authorMatch[1] : null,
+      // Kunci deduplikasi: ID video bila ada (host berbeda tetap video yang sama),
+      // kalau tidak ada: host + path tanpa query/hash.
+      key: id ? 'id:' + id : 'url:' + host + path
+    };
+  }
+
+  L.url = {
+    ALLOWED_DOMAINS: ALLOWED_DOMAINS,
+    REASONS: REASONS,
+    parseTikTokUrl: parseTikTokUrl,
+    isSafeTikTokUrl: function (s) { return parseTikTokUrl(s).ok; },
+    keyForId: function (id) { return 'id:' + id; }
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * date.js — membaca dan menampilkan tanggal dengan jujur.
+ *
+ * - Tanggal tanpa zona waktu (mis. "2023-01-01 12:00:00") dibaca APA ADANYA dan
+ *   ditampilkan apa adanya (kita pakai getter UTC supaya tidak bergeser oleh zona
+ *   waktu HP). Kita tidak tahu pasti zona waktu yang dipakai TikTok.
+ * - Format yang ambigu (mis. 03/04/2023) TIDAK ditebak: ditandai "tidak valid".
+ * - Tanggal di luar rentang wajar (sebelum 2014 atau lebih dari 1 hari di masa
+ *   depan) ditandai "tidak valid". Tidak ada tanggal yang dikarang.
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  var MIN_TS = Date.UTC(2014, 0, 1);
+  var DAY = 86400000;
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+  var MONTHS_LONG = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+  var ISO_RE = /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2})(?:[.,]\d{1,9})?)?)?\s*(Z|UTC|[+-]\d{2}(?::?\d{2})?)?$/i;
+
+  function pad(n, w) {
+    var s = String(n);
+    while (s.length < (w || 2)) s = '0' + s;
+    return s;
+  }
+
+  function result(state, ts, raw, reason) {
+    return { state: state, ts: ts, raw: raw, reason: reason || null };
+  }
+
+  function rawText(v) {
+    if (typeof v === 'string') return v.length > 80 ? v.slice(0, 80) + '…' : v;
+    try { return String(v).slice(0, 80); } catch (e) { return ''; }
+  }
+
+  function inRange(ts, now) {
+    return ts >= MIN_TS && ts <= now + DAY;
+  }
+
+  function parseDate(v, now) {
+    now = typeof now === 'number' ? now : Date.now();
+    if (v === undefined || v === null) return result('missing', null, null);
+    if (typeof v === 'string' && !v.trim()) return result('missing', null, null);
+    var raw = rawText(v);
+
+    var n = null;
+    if (typeof v === 'number') n = v;
+    else if (typeof v === 'string' && /^\d{10}$|^\d{13}$/.test(v.trim())) n = Number(v.trim());
+    if (n !== null) {
+      if (!isFinite(n)) return result('invalid', null, raw, 'format');
+      var ms = n >= 1e9 && n < 1e11 ? n * 1000 : n >= 1e11 && n < 1e14 ? n : NaN;
+      if (isNaN(ms)) return result('invalid', null, raw, 'format');
+      return inRange(ms, now) ? result('ok', ms, raw) : result('invalid', null, raw, 'rentang');
+    }
+
+    if (typeof v !== 'string') return result('invalid', null, raw, 'format');
+    var m = ISO_RE.exec(v.trim());
+    if (!m) return result('invalid', null, raw, 'format');
+    var y = +m[1], mo = +m[2], d = +m[3];
+    var h = m[4] ? +m[4] : 0, mi = m[5] ? +m[5] : 0, s = m[6] ? +m[6] : 0;
+    if (mo < 1 || mo > 12 || d < 1 || d > 31 || h > 23 || mi > 59 || s > 59) {
+      return result('invalid', null, raw, 'format');
+    }
+    var ts = Date.UTC(y, mo - 1, d, h, mi, s);
+    var chk = new Date(ts);
+    if (chk.getUTCFullYear() !== y || chk.getUTCMonth() !== mo - 1 || chk.getUTCDate() !== d) {
+      return result('invalid', null, raw, 'format'); // mis. 31 Februari
+    }
+    var tz = m[7];
+    if (tz && !/^(Z|UTC)$/i.test(tz)) {
+      var sign = tz.charAt(0) === '-' ? -1 : 1;
+      var digits = tz.slice(1).replace(':', '');
+      var oh = +digits.slice(0, 2), om = digits.length > 2 ? +digits.slice(2, 4) : 0;
+      if (oh > 14 || om > 59) return result('invalid', null, raw, 'format');
+      ts -= sign * (oh * 3600000 + om * 60000);
+    }
+    return inRange(ts, now) ? result('ok', ts, raw) : result('invalid', null, raw, 'rentang');
+  }
+
+  function formatDate(ts) {
+    var d = new Date(ts);
+    return d.getUTCDate() + ' ' + MONTHS[d.getUTCMonth()] + ' ' + d.getUTCFullYear() +
+      ', ' + pad(d.getUTCHours()) + '.' + pad(d.getUTCMinutes());
+  }
+
+  function parts(ts) {
+    var d = new Date(ts);
+    return {
+      day: d.getUTCDate(),
+      month: MONTHS[d.getUTCMonth()],
+      monthLong: MONTHS_LONG[d.getUTCMonth()],
+      year: d.getUTCFullYear(),
+      time: pad(d.getUTCHours()) + '.' + pad(d.getUTCMinutes()),
+      monthKey: d.getUTCFullYear() * 100 + d.getUTCMonth()
+    };
+  }
+
+  // "2022-03-05" (dari <input type=date>) -> awal/akhir hari. Mengembalikan null bila tidak valid.
+  function dayBound(str, endOfDay) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(str || '');
+    if (!m) return null;
+    var y = +m[1], mo = +m[2], d = +m[3];
+    var ts = endOfDay ? Date.UTC(y, mo - 1, d, 23, 59, 59, 999) : Date.UTC(y, mo - 1, d, 0, 0, 0, 0);
+    var chk = new Date(ts);
+    if (chk.getUTCMonth() !== mo - 1) return null;
+    return ts;
+  }
+
+  L.date = {
+    MIN_TS: MIN_TS,
+    parseDate: parseDate,
+    formatDate: formatDate,
+    parts: parts,
+    dayBound: dayBound,
+    monthsLong: MONTHS_LONG
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * zip.js — pembaca ZIP minimal, dijalankan lokal di browser.
+ *
+ * Kenapa buat sendiri, bukan pakai library? Kebutuhannya sempit: baca daftar isi
+ * (central directory) lalu buka beberapa file .json. Pembongkaran deflate memakai
+ * DecompressionStream bawaan browser (Chrome Android 103+). Hasilnya: nol
+ * dependensi, nol CDN, dan kita kontrol penuh batas keamanannya.
+ *
+ * Perlindungan:
+ *  - hanya entri yang kita butuhkan yang dibuka (file lain tidak disentuh)
+ *  - batas ukuran hasil ekstraksi per file, dihitung saat streaming (bukan hanya
+ *    percaya header), plus batas rasio kompresi
+ *  - ukuran sebenarnya harus sama dengan yang dinyatakan ZIP; CRC32 diperiksa
+ *  - ZIP berpassword / multi-disk / metode kompresi aneh ditolak dengan pesan jelas
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  var SIG_EOCD = 0x06054b50, SIG_CEN = 0x02014b50, SIG_LOC = 0x04034b50;
+  var SIG_EOCD64 = 0x06064b50, SIG_LOC64 = 0x07064b50;
+
+  function ZipError(code, message) {
+    var e = new Error(message);
+    e.name = 'ZipError';
+    e.code = code;
+    return e;
+  }
+
+  function u16(b, o) { return b[o] | (b[o + 1] << 8); }
+  function u32(b, o) { return (b[o] | (b[o + 1] << 8) | (b[o + 2] << 16) | (b[o + 3] << 24)) >>> 0; }
+  function u64(b, o) {
+    var lo = u32(b, o), hi = u32(b, o + 4);
+    var v = hi * 4294967296 + lo;
+    if (v > Number.MAX_SAFE_INTEGER) throw ZipError('zip-tidak-valid', 'Ukuran/offset di ZIP terlalu besar atau rusak.');
+    return v;
+  }
+
+  async function readSlice(file, start, end) {
+    return new Uint8Array(await file.slice(start, end).arrayBuffer());
+  }
+
+  var CRC_TABLE = null;
+  function crcTable() {
+    if (CRC_TABLE) return CRC_TABLE;
+    CRC_TABLE = new Uint32Array(256);
+    for (var n = 0; n < 256; n++) {
+      var c = n;
+      for (var k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      CRC_TABLE[n] = c >>> 0;
+    }
+    return CRC_TABLE;
+  }
+  function crc32Update(crc, buf) {
+    var t = crcTable();
+    for (var i = 0; i < buf.length; i++) crc = t[(crc ^ buf[i]) & 0xff] ^ (crc >>> 8);
+    return crc >>> 0;
+  }
+
+  async function listEntries(file, limits) {
+    limits = limits || {};
+    var maxEntries = limits.maxEntries || 50000;
+    var maxCdBytes = limits.maxCentralDirBytes || 64 * 1024 * 1024;
+    var size = file.size;
+    if (size < 22) throw ZipError('zip-tidak-valid', 'File ZIP terlalu kecil atau rusak.');
+
+    var tailLen = Math.min(size, 65535 + 22);
+    var tailStart = size - tailLen;
+    var tail = await readSlice(file, tailStart, size);
+
+    var eocd = -1;
+    for (var i = tail.length - 22; i >= 0; i--) {
+      if (u32(tail, i) === SIG_EOCD && i + 22 + u16(tail, i + 20) === tail.length) { eocd = i; break; }
+    }
+    if (eocd < 0) throw ZipError('zip-tidak-valid', 'Bukan file ZIP yang valid (ujung arsip tidak ditemukan). File mungkin terpotong saat diunduh.');
+
+    var diskNo = u16(tail, eocd + 4), cdDisk = u16(tail, eocd + 6);
+    var total = u16(tail, eocd + 10);
+    var cdSize = u32(tail, eocd + 12);
+    var cdOffset = u32(tail, eocd + 16);
+    if (diskNo !== 0 || cdDisk !== 0) throw ZipError('zip-multidisk', 'ZIP yang terpecah ke beberapa bagian tidak didukung. Gabungkan dulu atau ekstrak di perangkatmu.');
+
+    if (total === 0xffff || cdSize === 0xffffffff || cdOffset === 0xffffffff) {
+      // ZIP64
+      if (eocd < 20 || u32(tail, eocd - 20) !== SIG_LOC64) {
+        throw ZipError('zip-tidak-valid', 'ZIP64 tidak lengkap atau rusak.');
+      }
+      var eocd64Off = u64(tail, eocd - 20 + 8);
+      var rec = await readSlice(file, eocd64Off, eocd64Off + 56);
+      if (rec.length < 56 || u32(rec, 0) !== SIG_EOCD64) throw ZipError('zip-tidak-valid', 'ZIP64 tidak lengkap atau rusak.');
+      total = u64(rec, 32);
+      cdSize = u64(rec, 40);
+      cdOffset = u64(rec, 48);
+    }
+
+    if (total > maxEntries) throw ZipError('zip-terlalu-banyak', 'ZIP berisi terlalu banyak file (' + total + '). Batas: ' + maxEntries + '.');
+    if (cdSize > maxCdBytes) throw ZipError('zip-tidak-valid', 'Daftar isi ZIP tidak wajar besarnya.');
+    if (cdOffset + cdSize > size) throw ZipError('zip-tidak-valid', 'Daftar isi ZIP menunjuk di luar file (rusak).');
+
+    var cd = await readSlice(file, cdOffset, cdOffset + cdSize);
+    var entries = [];
+    var p = 0;
+    var td = new TextDecoder('utf-8');
+    for (var n = 0; n < total; n++) {
+      if (p + 46 > cd.length || u32(cd, p) !== SIG_CEN) throw ZipError('zip-tidak-valid', 'Daftar isi ZIP rusak.');
+      var flags = u16(cd, p + 8), method = u16(cd, p + 10);
+      var crc = u32(cd, p + 16);
+      var compSize = u32(cd, p + 20), usize = u32(cd, p + 24);
+      var nameLen = u16(cd, p + 28), extraLen = u16(cd, p + 30), commentLen = u16(cd, p + 32);
+      var localOffset = u32(cd, p + 42);
+      var nameStart = p + 46;
+      if (nameStart + nameLen + extraLen + commentLen > cd.length) throw ZipError('zip-tidak-valid', 'Daftar isi ZIP rusak.');
+      var name = td.decode(cd.subarray(nameStart, nameStart + nameLen));
+
+      if (compSize === 0xffffffff || usize === 0xffffffff || localOffset === 0xffffffff) {
+        var ex = nameStart + nameLen, exEnd = ex + extraLen;
+        while (ex + 4 <= exEnd) {
+          var id = u16(cd, ex), len = u16(cd, ex + 2);
+          if (id === 0x0001) {
+            var q = ex + 4;
+            if (usize === 0xffffffff) { usize = u64(cd, q); q += 8; }
+            if (compSize === 0xffffffff) { compSize = u64(cd, q); q += 8; }
+            if (localOffset === 0xffffffff) { localOffset = u64(cd, q); q += 8; }
+            break;
+          }
+          ex += 4 + len;
+        }
+      }
+      entries.push({
+        name: name, method: method, flags: flags, crc: crc,
+        compSize: compSize, size: usize, localOffset: localOffset,
+        isDir: name.charAt(name.length - 1) === '/',
+        encrypted: (flags & 1) === 1
+      });
+      p = nameStart + nameLen + extraLen + commentLen;
+    }
+    return entries;
+  }
+
+  /*
+   * Membaca satu entri menjadi teks UTF-8. Melempar ZipError bila ada masalah.
+   * opts: maxBytes, maxRatio, onProgress(bytesSoFar, totalBytes)
+   */
+  async function readEntryText(file, entry, opts) {
+    opts = opts || {};
+    var maxBytes = opts.maxBytes || 250 * 1024 * 1024;
+    var maxRatio = opts.maxRatio || 300;
+
+    if (entry.encrypted) throw ZipError('zip-berpassword', 'File "' + entry.name + '" di dalam ZIP diberi password. ZIP berpassword tidak didukung; ekstrak dulu dengan password lalu pilih file .json-nya.');
+    if (entry.method !== 0 && entry.method !== 8) throw ZipError('zip-metode', 'Metode kompresi ZIP untuk "' + entry.name + '" tidak didukung (kode ' + entry.method + '). Ekstrak dulu di perangkatmu, lalu pilih file .json-nya.');
+    if (entry.size > maxBytes) throw ZipError('zip-terlalu-besar', 'Isi "' + entry.name + '" setelah diekstrak berukuran ' + mb(entry.size) + ', melebihi batas ' + mb(maxBytes) + '.');
+    if (entry.compSize > 0 && entry.size / entry.compSize > maxRatio) throw ZipError('zip-rasio', 'Rasio kompresi "' + entry.name + '" tidak wajar (lebih dari ' + maxRatio + 'x). Arsip ini ditolak demi keamanan.');
+    if (entry.method === 0 && entry.compSize !== entry.size) throw ZipError('zip-tidak-valid', 'Ukuran entri "' + entry.name + '" tidak konsisten (ZIP rusak).');
+    if (entry.method === 8 && typeof DecompressionStream === 'undefined') {
+      throw ZipError('browser-lama', 'Browser ini belum bisa membuka ZIP langsung (butuh Chrome 103 atau lebih baru). Ekstrak ZIP-nya dulu, lalu pilih file .json di dalamnya.');
+    }
+
+    var hdr = await readSlice(file, entry.localOffset, entry.localOffset + 30);
+    if (hdr.length < 30 || u32(hdr, 0) !== SIG_LOC) throw ZipError('zip-tidak-valid', 'Header file "' + entry.name + '" di dalam ZIP rusak.');
+    var dataStart = entry.localOffset + 30 + u16(hdr, 26) + u16(hdr, 28);
+    var dataEnd = dataStart + entry.compSize;
+    if (dataEnd > file.size) throw ZipError('zip-tidak-valid', 'Data "' + entry.name + '" terpotong (ZIP rusak atau belum selesai diunduh).');
+
+    var stream = file.slice(dataStart, dataEnd).stream();
+    if (entry.method === 8) stream = stream.pipeThrough(new DecompressionStream('deflate-raw'));
+
+    var reader = stream.getReader();
+    var dec = new TextDecoder('utf-8');
+    var parts = [];
+    var total = 0, crc = 0xffffffff;
+    var limit = Math.min(maxBytes, entry.size);
+    try {
+      for (;;) {
+        var r;
+        try {
+          r = await reader.read();
+        } catch (e) {
+          throw ZipError('zip-rusak', 'Isi "' + entry.name + '" di dalam ZIP rusak dan tidak bisa dibongkar.');
+        }
+        if (r.done) break;
+        var chunk = r.value;
+        total += chunk.length;
+        if (total > limit) {
+          try { await reader.cancel(); } catch (e2) { /* abaikan */ }
+          throw total > maxBytes
+            ? ZipError('zip-terlalu-besar', 'Isi "' + entry.name + '" melebihi batas ' + mb(maxBytes) + ' saat diekstrak. Arsip ditolak demi keamanan.')
+            : ZipError('zip-ukuran-tidak-cocok', 'Isi "' + entry.name + '" lebih besar daripada yang dinyatakan ZIP (arsip rusak atau tidak aman).');
+        }
+        crc = crc32Update(crc, chunk);
+        parts.push(dec.decode(chunk, { stream: true }));
+        if (opts.onProgress) opts.onProgress(total, entry.size);
+      }
+    } finally {
+      try { reader.releaseLock(); } catch (e3) { /* abaikan */ }
+    }
+    parts.push(dec.decode());
+    if (total !== entry.size) throw ZipError('zip-ukuran-tidak-cocok', 'Ukuran isi "' + entry.name + '" tidak sama dengan yang dinyatakan ZIP (arsip rusak).');
+    if (((crc ^ 0xffffffff) >>> 0) !== entry.crc) throw ZipError('zip-crc', 'Pemeriksaan CRC gagal untuk "' + entry.name + '": isi ZIP rusak. Unduh ulang file ekspor.');
+    var text = parts.join('');
+    if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+    return text;
+  }
+
+  function mb(n) {
+    return (n / 1048576).toFixed(n >= 10485760 ? 0 : 1) + ' MB';
+  }
+
+  L.zip = { listEntries: listEntries, readEntryText: readEntryText, ZipError: ZipError, formatMB: mb };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * extract.js — mencari dan membaca bagian "video tersimpan" dari JSON ekspor TikTok
+ * tanpa mengandalkan satu struktur tertentu.
+ *
+ * Cara kerja:
+ *  1. Telusuri seluruh pohon JSON, cari ARRAY yang isinya terlihat seperti daftar
+ *     video (objek dengan kolom tautan/ID, atau teks berupa URL).
+ *  2. Tiap array jadi "kandidat" bagian data. Kategorinya (Favorit / Disukai /
+ *     Riwayat tontonan / lainnya) ditebak dari nama kunci di jalurnya. Tebakan ini
+ *     hanya saran — pengguna yang memutuskan bagian mana yang dipakai.
+ *  3. Setiap item dibaca lewat fieldsOf(), yang mengenali nama kolom secara
+ *     longgar (Link/link/VideoLink/url..., Date/Time/FavoriteDate...).
+ *
+ * Prinsip: tidak ada nilai yang dikarang. Tanggal "posting" (create_time dsb.)
+ * sengaja TIDAK dipakai untuk mengurutkan karena yang dicari adalah tanggal disimpan.
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+  var U = function () { return L.url; };
+  var D = function () { return L.date; };
+
+  var MAX_DEPTH = 16;
+  var MAX_NODES = 4000000;
+  var SAMPLE = 60;
+
+  function norm(k) { return String(k).toLowerCase().replace(/[^a-z0-9]/g, ''); }
+
+  var LINK_EXACT = /^(?:video|share)?(?:link|url|href|uri)$/;
+  var LINK_LOOSE = /link|url|href/;
+  var DATE_SPECIFIC = [
+    /^(?:favou?rite|favou?rited|save|saved|collect|collected|added|add)(?:date|time|timestamp|at|on)$/,
+    /^(?:date|time)(?:added|saved|favou?rited|collected)$/
+  ];
+  var DATE_PLAIN = /^(?:date|time|timestamp|datetime|dateandtime)$/;
+  var DATE_POSTED = /create|post|publish|upload|birth|expir|updat|modif/;
+  var DATEISH = /(?:date|time|stamp|at)$/;
+  var ID_KEY = /^(?:video|item|aweme)?id$/;
+  var DESC_KEY = /^(?:desc|description|videodesc|videodescription|title|caption|text|videotitle)$/;
+  var AUTHOR_KEY = /^(?:author|authorname|authoruniqueid|uniqueid|username|nickname|account|creator)$/;
+
+  function clip(s, n) {
+    s = String(s).replace(/[\u0000-\u001f\u007f]+/g, ' ').trim();
+    return s.length > n ? s.slice(0, n) + '…' : s;
+  }
+
+  /* Mengambil kolom yang kita kenal dari satu objek. */
+  function fieldsOf(o) {
+    var f = { link: null, id: null, date: null, desc: null, author: null, postedKey: false, unsafeId: false };
+    var linkExact = null, linkLoose = null, linkAny = null;
+    var dSpec, dPlain;
+    var keys = Object.keys(o);
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i], v = o[k];
+      var tv = typeof v;
+      if (tv !== 'string' && tv !== 'number') continue;
+      var nk = norm(k);
+
+      if (DATEISH.test(nk) && DATE_POSTED.test(nk)) { f.postedKey = true; continue; }
+
+      if (tv === 'string') {
+        if (LINK_EXACT.test(nk)) { if (linkExact === null && v.trim()) linkExact = v; continue; }
+        if (LINK_LOOSE.test(nk)) { if (linkLoose === null && v.trim()) linkLoose = v; continue; }
+      }
+      if (DATE_SPECIFIC[0].test(nk) || DATE_SPECIFIC[1].test(nk)) { if (dSpec === undefined) dSpec = v; continue; }
+      if (DATE_PLAIN.test(nk)) { if (dPlain === undefined) dPlain = v; continue; }
+      if (ID_KEY.test(nk)) {
+        if (tv === 'string' && /^\d{5,30}$/.test(v.trim())) { if (f.id === null) f.id = v.trim(); }
+        else if (tv === 'number') {
+          // ID TikTok (19 digit) melebihi presisi angka JSON; jangan percaya.
+          if (Number.isSafeInteger(v) && v >= 10000) { if (f.id === null) f.id = String(v); }
+          else f.unsafeId = true;
+        }
+        continue;
+      }
+      if (tv === 'string') {
+        if (DESC_KEY.test(nk)) { if (f.desc === null && v.trim()) f.desc = clip(v, 280); continue; }
+        if (AUTHOR_KEY.test(nk)) { if (f.author === null && v.trim()) f.author = clip(v, 100); continue; }
+        if (linkAny === null && /^[a-z][a-z0-9+.\-]*:/i.test(v.trim()) && /tiktok/i.test(v)) linkAny = v;
+      }
+    }
+    f.link = linkExact !== null ? linkExact : linkLoose !== null ? linkLoose : linkAny;
+    f.date = dSpec !== undefined ? dSpec : dPlain !== undefined ? dPlain : null;
+    return f;
+  }
+
+  /* ---------- Kategori ---------- */
+  var RX_HISTORY = /browsing|history|watched|riwayat/;
+  var RX_LIKED = /like|digg|suka/;
+  var RX_FAV = /favou?rite|saved|collect|bookmark|simpan/;
+  var RX_NOTVIDEO = /sound|music|effect|hashtag|sticker|song|audio|filter/;
+  var RX_NONVIDEO_PATH = /^\/(?:music|tag|effect|sticker|discover|place|playlist|following)(?:\/|$)/;
+
+  function classify(path) {
+    var segs = [];
+    for (var i = 0; i < path.length; i++) if (typeof path[i] === 'string') segs.push(path[i]);
+    var skippedMisleadingLeaf = false;
+    for (var j = segs.length - 1; j >= 0; j--) {
+      var n = norm(segs[j]);
+      // Di ekspor TikTok, "ItemFavoriteList" berada di bawah "Like List" dan berisi video DISUKAI.
+      if (j === segs.length - 1 && n === 'itemfavoritelist') { skippedMisleadingLeaf = true; continue; }
+      if (RX_NOTVIDEO.test(n)) return 'other';
+      if (RX_HISTORY.test(n)) return 'history';
+      var liked = RX_LIKED.test(n), fav = RX_FAV.test(n);
+      if (liked && fav) return 'unknown';
+      if (liked) return 'liked';
+      if (fav) return 'favorite';
+    }
+    return skippedMisleadingLeaf ? 'liked' : 'unknown';
+  }
+
+  var CATEGORY_LABEL = {
+    favorite: 'Favorit / Tersimpan',
+    liked: 'Disukai (like)',
+    history: 'Riwayat tontonan',
+    other: 'Bukan video',
+    unknown: 'Tidak diketahui'
+  };
+
+  function pathText(path) {
+    var out = '';
+    for (var i = 0; i < path.length; i++) {
+      var p = path[i];
+      if (typeof p === 'number') out += '[' + p + ']';
+      else out += (out ? ' › ' : '') + p;
+    }
+    return out || '(isi utama file)';
+  }
+
+  /* ---------- Menilai sebuah array ---------- */
+  function evaluateArray(arr) {
+    var n = arr.length;
+    var step = Math.max(1, Math.floor(n / SAMPLE));
+    var seen = 0, entryLike = 0, objects = 0, strings = 0, dated = 0, nonVideo = 0;
+    for (var i = 0; i < n && seen < SAMPLE; i += step) {
+      var it = arr[i];
+      seen++;
+      if (it && typeof it === 'object' && !Array.isArray(it)) {
+        objects++;
+        var f = fieldsOf(it);
+        if (f.link !== null || f.id !== null) {
+          entryLike++;
+          if (f.date !== null) dated++;
+          if (f.link !== null) {
+            var p = U().parseTikTokUrl(f.link);
+            if (p.ok && RX_NONVIDEO_PATH.test(safePath(p.href))) nonVideo++;
+          }
+        }
+      } else if (typeof it === 'string') {
+        strings++;
+        if (/^https?:\/\//i.test(it.trim())) entryLike++;
+      }
+    }
+    return {
+      seen: seen,
+      kind: objects >= strings ? 'objects' : 'strings',
+      linkRate: seen ? entryLike / seen : 0,
+      dateRate: entryLike ? dated / entryLike : 0,
+      nonVideoRate: entryLike ? nonVideo / entryLike : 0,
+      strong: seen > 0 && entryLike / seen >= 0.5,
+      plausibleWeak: objects + strings > 0
+    };
+  }
+
+  function safePath(href) {
+    try { return new URL(href).pathname; } catch (e) { return ''; }
+  }
+
+  function sampleOf(arr) {
+    var out = [];
+    for (var i = 0; i < arr.length && out.length < 2; i++) {
+      var it = arr[i];
+      if (it && typeof it === 'object') {
+        var f = fieldsOf(it);
+        out.push({ date: f.date === null ? null : clip(f.date, 40), link: f.link === null ? null : clip(f.link, 90), id: f.id });
+      } else if (typeof it === 'string') {
+        out.push({ date: null, link: clip(it, 90), id: null });
+      }
+    }
+    return out;
+  }
+
+  /*
+   * Mencari kandidat bagian data. Hasil:
+   *   { candidates: [...], truncated: bool }
+   * Kandidat "weak" = array objek/teks yang tidak terlihat memuat tautan; hanya untuk pilihan manual.
+   */
+  function findCandidates(root, fileName) {
+    var found = [];
+    var stack = [{ node: root, path: [] }];
+    var visited = 0, truncated = false;
+    while (stack.length) {
+      var cur = stack.pop();
+      var node = cur.node;
+      if (++visited > MAX_NODES) { truncated = true; break; }
+
+      if (Array.isArray(node)) {
+        if (node.length === 0) {
+          var cat0 = classify(cur.path);
+          if (cat0 === 'favorite' || cat0 === 'liked' || cat0 === 'history') {
+            found.push(makeCand(fileName, cur.path, node, null, cat0, true));
+          }
+          continue;
+        }
+        var ev = evaluateArray(node);
+        if (ev.strong) {
+          var cat = classify(cur.path);
+          if (ev.nonVideoRate >= 0.7) cat = 'other';
+          found.push(makeCand(fileName, cur.path, node, ev, cat, false));
+          continue;
+        }
+        if (ev.plausibleWeak) found.push(makeCand(fileName, cur.path, node, ev, 'unknown', false, true));
+        if (cur.path.length < MAX_DEPTH) {
+          var lim = Math.min(node.length, 100);
+          for (var i = lim - 1; i >= 0; i--) {
+            var c = node[i];
+            if (c && typeof c === 'object') stack.push({ node: c, path: cur.path.concat([i]) });
+          }
+        }
+      } else if (node && typeof node === 'object') {
+        if (cur.path.length >= MAX_DEPTH) continue;
+        var keys = Object.keys(node);
+        for (var j = keys.length - 1; j >= 0; j--) {
+          var ch = node[keys[j]];
+          if (ch && typeof ch === 'object') stack.push({ node: ch, path: cur.path.concat([keys[j]]) });
+        }
+      }
+    }
+    return { candidates: found, truncated: truncated };
+  }
+
+  function makeCand(file, path, arr, ev, category, empty, weak) {
+    return {
+      id: null, // diisi pemanggil
+      file: file,
+      path: path,
+      pathText: pathText(path),
+      length: arr.length,
+      empty: !!empty,
+      weak: !!weak,
+      kind: ev ? ev.kind : 'objects',
+      linkRate: ev ? ev.linkRate : 0,
+      dateRate: ev ? ev.dateRate : 0,
+      category: category,
+      categoryLabel: CATEGORY_LABEL[category],
+      sample: empty ? [] : sampleOf(arr)
+    };
+  }
+
+  function sortCandidates(list) {
+    var rank = { favorite: 0, liked: 1, history: 2, unknown: 3, other: 4 };
+    return list.slice().sort(function (a, b) {
+      if (a.weak !== b.weak) return a.weak ? 1 : -1;
+      if (a.empty !== b.empty) return a.empty ? 1 : -1;
+      if (rank[a.category] !== rank[b.category]) return rank[a.category] - rank[b.category];
+      return b.length - a.length;
+    });
+  }
+
+  function resolvePath(root, path) {
+    var cur = root;
+    for (var i = 0; i < path.length; i++) {
+      if (cur === null || typeof cur !== 'object') return null;
+      cur = cur[path[i]];
+    }
+    return Array.isArray(cur) ? cur : null;
+  }
+
+  /* ---------- Item -> entri ---------- */
+  function toEntry(item, pos, src, now) {
+    var f, linkRaw;
+    if (typeof item === 'string') {
+      linkRaw = item;
+      f = { link: item, id: null, date: null, desc: null, author: null, postedKey: false };
+    } else if (item && typeof item === 'object' && !Array.isArray(item)) {
+      f = fieldsOf(item);
+      linkRaw = f.link;
+    } else {
+      return { fail: { reason: 'bukan-objek', preview: previewOf(item) } };
+    }
+
+    var url = null, id = null, key = null, author = null;
+    if (linkRaw !== null) {
+      var p = U().parseTikTokUrl(linkRaw);
+      if (!p.ok) return { fail: { reason: p.reason, preview: clip(linkRaw, 160) } };
+      url = p.href;
+      id = p.id || f.id;
+      author = p.author;
+      key = p.id ? p.key : id ? U().keyForId(id) : p.key;
+    } else if (f.id !== null) {
+      id = f.id;
+      key = U().keyForId(id);
+    } else {
+      return { fail: { reason: 'tanpa-tautan-atau-id', preview: previewOf(item) } };
+    }
+
+    var d = D().parseDate(f.date, now);
+    return {
+      entry: {
+        pos: pos,
+        src: src,
+        id: id,
+        url: url,
+        key: key,
+        ts: d.ts,
+        dateRaw: d.raw,
+        dateState: d.state,
+        author: f.author !== null ? f.author : author,
+        desc: f.desc
+      },
+      postedKey: f.postedKey
+    };
+  }
+
+  function previewOf(item) {
+    try {
+      var s = JSON.stringify(item);
+      return s === undefined ? String(item) : clip(s, 160);
+    } catch (e) {
+      return '(tidak bisa ditampilkan)';
+    }
+  }
+
+  /*
+   * Membaca semua item dari array terpilih. Mengembalikan:
+   *   { entries, stats }
+   * Tidak ada entri yang dibuang diam-diam: yang gagal dihitung per alasan dan
+   * 200 contoh pertamanya disimpan untuk ditampilkan.
+   */
+  function extractFromArray(arr, src, now, stats) {
+    var entries = [];
+    for (var i = 0; i < arr.length; i++) {
+      stats.found++;
+      var r = toEntry(arr[i], i, src, now);
+      if (r.fail) {
+        stats.failed++;
+        stats.failReasons[r.fail.reason] = (stats.failReasons[r.fail.reason] || 0) + 1;
+        if (stats.failSamples.length < 200) stats.failSamples.push({ src: src, pos: i, reason: r.fail.reason, preview: r.fail.preview });
+        continue;
+      }
+      stats.valid++;
+      if (r.postedKey) stats.postedDateIgnored = true;
+      stats.dates[r.entry.dateState]++;
+      entries.push(r.entry);
+    }
+    return entries;
+  }
+
+  function newStats() {
+    return {
+      found: 0, valid: 0, failed: 0,
+      failReasons: {}, failSamples: [],
+      dates: { ok: 0, missing: 0, invalid: 0 },
+      postedDateIgnored: false
+    };
+  }
+
+  /* ---------- Ringkasan struktur tanpa nilai ---------- */
+  function maskString(s) {
+    s = String(s);
+    if (/^https?:\/\//i.test(s)) {
+      var m = /^(https?:\/\/[^\/?#]*)([^?#]*)/i.exec(s);
+      if (m) {
+        var host = m[1].replace(/\/\/[^@\/]*@/, '//‹kredensial›@');
+        var segs = m[2].split('/').map(function (seg) {
+          if (!seg) return seg;
+          if (/^\d+$/.test(seg)) return '<angka>';
+          if (seg.charAt(0) === '@') return '@<akun>';
+          return seg.length > 16 ? '<teks-panjang>' : seg;
+        });
+        return host + segs.join('/') + (/[?#]/.test(s) ? '?…' : '');
+      }
+    }
+    if (s.length > 40 || /@/.test(s)) return '<teks ' + s.length + ' karakter>';
+    return s.replace(/[A-Za-z]/g, 'a').replace(/\d/g, '9');
+  }
+
+  function maskKey(k) {
+    return /^\d{5,}$/.test(k) || /@/.test(k) || k.length > 60 ? '‹disamarkan›' : k;
+  }
+
+  function outline(root, fileName) {
+    var lines = ['# ' + fileName + ' (hanya nama kunci, tipe, dan pola — tanpa isi data)'];
+    var MAX_KEYS = 30, MAX_LINES = 400, MAX_D = 6;
+    function push(depth, text) { if (lines.length < MAX_LINES) lines.push(new Array(depth + 1).join('  ') + text); }
+    function walk(v, label, depth) {
+      if (lines.length >= MAX_LINES) return;
+      if (Array.isArray(v)) {
+        var first = null;
+        for (var i = 0; i < v.length; i++) if (v[i] !== null && v[i] !== undefined) { first = v[i]; break; }
+        push(depth, label + ' [array, ' + v.length + ' item]');
+        if (first !== null && typeof first === 'object' && depth < MAX_D) walk(first, '(contoh item)', depth + 1);
+        else if (typeof first === 'string') push(depth + 1, '(contoh item): teks, pola ' + maskString(first));
+        return;
+      }
+      if (v && typeof v === 'object') {
+        var keys = Object.keys(v);
+        push(depth, label + ' {objek, ' + keys.length + ' kunci}');
+        if (depth >= MAX_D) return;
+        for (var j = 0; j < keys.length && j < MAX_KEYS; j++) walk(v[keys[j]], maskKey(keys[j]), depth + 1);
+        if (keys.length > MAX_KEYS) push(depth + 1, '…(+' + (keys.length - MAX_KEYS) + ' kunci lainnya)');
+        return;
+      }
+      if (typeof v === 'string') push(depth, label + ': teks, pola ' + maskString(v));
+      else push(depth, label + ': ' + (v === null ? 'null' : typeof v));
+    }
+    walk(root, '(akar)', 0);
+    if (lines.length >= MAX_LINES) lines.push('…(dipotong)');
+    return lines.join('\n');
+  }
+
+  L.extract = {
+    fieldsOf: fieldsOf,
+    classify: classify,
+    categoryLabel: CATEGORY_LABEL,
+    findCandidates: findCandidates,
+    sortCandidates: sortCandidates,
+    resolvePath: resolvePath,
+    toEntry: toEntry,
+    extractFromArray: extractFromArray,
+    newStats: newStats,
+    outline: outline,
+    maskString: maskString
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * importer.js — alur impor: kenali jenis file (JSON / ZIP), baca, urai, cari bagian
+ * data, lalu ekstrak entri dari bagian yang dipilih pengguna.
+ *
+ * Kelas ini TIDAK menyentuh DOM, jadi sama-sama bisa jalan di Web Worker, di thread
+ * utama (mode cadangan), dan di Node (untuk pengujian).
+ */
+(function (G) {
+  'use strict';
+  var L = (G.Lawas = G.Lawas || {});
+
+  var MB = 1024 * 1024;
+  var DEFAULT_LIMITS = {
+    maxJsonBytes: 250 * MB,   // ukuran satu file JSON (setelah diekstrak bila dari ZIP)
+    maxTotalBytes: 400 * MB,  // total isi yang boleh diekstrak dari satu ZIP
+    maxJsonEntries: 8,        // berapa file .json dalam ZIP yang dibaca
+    maxRatio: 300,            // rasio kompresi tertinggi yang wajar
+    maxZipEntries: 50000,
+    warnBytes: 80 * MB
+  };
+
+  function ImportError(code, message, detail) {
+    var e = new Error(message);
+    e.name = 'ImportError';
+    e.code = code;
+    e.detail = detail || null;
+    return e;
+  }
+
+  function serializeError(e) {
+    return {
+      code: e && e.code ? e.code : 'tak-terduga',
+      message: e && e.message ? e.message : String(e),
+      detail: e && e.detail ? e.detail : null
+    };
+  }
+
+  function mb(n) { return L.zip.formatMB(n); }
+
+  class Importer {
+    constructor(opts) {
+      opts = opts || {};
+      this.limits = Object.assign({}, DEFAULT_LIMITS, opts.limits || {});
+      this.onStatus = opts.onStatus || function () {};
+      this.yieldUI = opts.yield || function () { return Promise.resolve(); };
+      this.now = typeof opts.now === 'number' ? opts.now : Date.now();
+      this.docs = [];
+      this.candidates = [];
+    }
+
+    status(text) { this.onStatus(text); }
+
+    async load(file) {
+      var lim = this.limits;
+      if (!file || typeof file.size !== 'number') throw ImportError('tanpa-file', 'Tidak ada file yang dipilih.');
+      if (file.size === 0) throw ImportError('file-kosong', 'File ini kosong (0 byte). Unduh ulang file ekspor dari TikTok.');
+
+      this.status('Memeriksa jenis file…');
+      await this.yieldUI();
+      var kind = await this.sniff(file);
+      var warnings = [];
+      var docs = [];
+
+      if (kind === 'zip') {
+        var entries;
+        try {
+          entries = await L.zip.listEntries(file, { maxEntries: lim.maxZipEntries });
+        } catch (e) {
+          throw ImportError(e.code || 'zip-tidak-valid', e.message);
+        }
+        var jsons = entries.filter(function (en) {
+          return !en.isDir && /\.json$/i.test(en.name) && !/(^|\/)(__MACOSX\/|\._)/.test(en.name);
+        });
+        if (!jsons.length) {
+          var names = entries.filter(function (en) { return !en.isDir; }).slice(0, 12).map(function (en) { return en.name; });
+          throw ImportError('zip-tanpa-json',
+            'ZIP ini tidak berisi file .json. Saat meminta data di TikTok, pilih format JSON (bukan TXT).',
+            names.length ? 'Isi ZIP (maks. 12 nama): ' + names.join(', ') : 'ZIP kosong.');
+        }
+        jsons.sort(function (a, b) { return b.size - a.size; });
+        if (jsons.length > lim.maxJsonEntries) {
+          warnings.push((jsons.length - lim.maxJsonEntries) + ' file JSON lain di dalam ZIP tidak dibaca (hanya ' + lim.maxJsonEntries + ' terbesar).');
+          jsons = jsons.slice(0, lim.maxJsonEntries);
+        }
+        var total = 0;
+        jsons.forEach(function (en) { total += en.size; });
+        if (total > lim.maxTotalBytes) {
+          throw ImportError('zip-terlalu-besar', 'Isi JSON di dalam ZIP setelah diekstrak berukuran ' + mb(total) + ', melebihi batas ' + mb(lim.maxTotalBytes) + '. Minta ekspor dengan kategori lebih sedikit (cukup Aktivitas/Favorit).');
+        }
+        for (var i = 0; i < jsons.length; i++) {
+          var en = jsons[i];
+          if (en.size > lim.warnBytes) warnings.push('"' + en.name + '" besar (' + mb(en.size) + '); jika browser kehabisan memori, minta ekspor dengan kategori lebih sedikit.');
+          this.status('Membuka ' + en.name + ' (' + mb(en.size) + ') dari ZIP…');
+          await this.yieldUI();
+          var text;
+          try {
+            text = await L.zip.readEntryText(file, en, { maxBytes: lim.maxJsonBytes, maxRatio: lim.maxRatio });
+          } catch (e2) {
+            throw ImportError(e2.code || 'zip-rusak', e2.message);
+          }
+          docs.push(await this.parse(text, en.name, en.size));
+          text = null;
+        }
+      } else {
+        if (file.size > lim.maxJsonBytes) {
+          throw ImportError('file-terlalu-besar', 'File berukuran ' + mb(file.size) + ', melebihi batas ' + mb(lim.maxJsonBytes) + '. Minta ekspor dengan kategori lebih sedikit, atau pakai komputer.');
+        }
+        if (file.size > lim.warnBytes) warnings.push('File besar (' + mb(file.size) + '); jika browser kehabisan memori, minta ekspor dengan kategori lebih sedikit.');
+        this.status('Membaca file (' + mb(file.size) + ')…');
+        await this.yieldUI();
+        var t = await file.text();
+        if (t.charCodeAt(0) === 0xfeff) t = t.slice(1);
+        docs.push(await this.parse(t, file.name || 'file.json', file.size));
+        t = null;
+      }
+
+      this.docs = docs;
+      return this.scan(kind, warnings);
+    }
+
+    /* Untuk demo/tes: lewati pembacaan file, langsung dari objek JS. */
+    loadObject(root, name) {
+      this.docs = [{ name: name || 'demo.json', bytes: 0, root: root }];
+      return this.scan('objek', []);
+    }
+
+    async parse(text, name, bytes) {
+      this.status('Mengurai JSON "' + name + '"…');
+      await this.yieldUI();
+      var root;
+      try {
+        root = JSON.parse(text);
+      } catch (e) {
+        throw ImportError('json-rusak',
+          'File "' + name + '" bukan JSON yang valid; mungkin terpotong saat diunduh atau bukan file ekspor TikTok.',
+          e && e.message ? e.message : null);
+      }
+      if (root === null || typeof root !== 'object') {
+        throw ImportError('json-bukan-objek', 'File "' + name + '" adalah JSON valid tetapi isinya bukan objek atau daftar. Ini bukan file ekspor data TikTok.');
+      }
+      return { name: name, bytes: bytes, root: root };
+    }
+
+    scan(kind, warnings) {
+      this.status('Mencari bagian data…');
+      var all = [];
+      var outlines = [];
+      var truncated = false;
+      var docs = this.docs;
+      for (var i = 0; i < docs.length; i++) {
+        var r = L.extract.findCandidates(docs[i].root, docs[i].name);
+        r.candidates.forEach(function (c) { c.docIndex = i; });
+        all = all.concat(r.candidates);
+        if (r.truncated) truncated = true;
+        outlines.push(L.extract.outline(docs[i].root, docs[i].name));
+      }
+      if (truncated) warnings.push('File sangat besar; pencarian bagian data dihentikan lebih awal dan mungkin tidak lengkap.');
+      all = L.extract.sortCandidates(all);
+      all.forEach(function (c, idx) { c.id = 'c' + idx; });
+      this.candidates = all;
+      return {
+        kind: kind,
+        docs: docs.map(function (d) { return { name: d.name, bytes: d.bytes }; }),
+        candidates: all,
+        outline: outlines.join('\n\n'),
+        warnings: warnings
+      };
+    }
+
+    extract(ids) {
+      var stats = L.extract.newStats();
+      var entries = [];
+      var sections = [];
+      var self = this;
+      ids.forEach(function (id) {
+        var cand = null;
+        for (var i = 0; i < self.candidates.length; i++) if (self.candidates[i].id === id) { cand = self.candidates[i]; break; }
+        if (!cand) throw ImportError('bagian-tidak-ada', 'Bagian data yang dipilih tidak ditemukan.');
+        var arr = L.extract.resolvePath(self.docs[cand.docIndex].root, cand.path);
+        if (!arr) throw ImportError('bagian-tidak-ada', 'Bagian data "' + cand.pathText + '" tidak lagi bisa dibaca.');
+        var src = sections.length;
+        sections.push({ name: cand.pathText, file: cand.file, category: cand.category, categoryLabel: cand.categoryLabel });
+        var part = L.extract.extractFromArray(arr, src, self.now, stats);
+        for (var k = 0; k < part.length; k++) entries.push(part[k]);
+      });
+      return { entries: entries, stats: stats, sections: sections };
+    }
+
+    dispose() {
+      this.docs = [];
+      this.candidates = [];
+    }
+
+    /* Mengenali jenis file dari isinya, bukan dari ekstensi. */
+    async sniff(file) {
+      var head = new Uint8Array(await file.slice(0, 4096).arrayBuffer());
+      if (head.length >= 4 && head[0] === 0x50 && head[1] === 0x4b && (head[2] === 0x03 || head[2] === 0x05) && (head[3] === 0x04 || head[3] === 0x06)) return 'zip';
+      var text = new TextDecoder('utf-8').decode(head);
+      if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+      var trimmed = text.replace(/^\s+/, '');
+      var c = trimmed.charAt(0);
+      if (c === '{' || c === '[') return 'json';
+      var hint = '';
+      if (/^\s*(Date:|Link:|Favorite|Like|Video)/i.test(trimmed) || /\n\s*Date:\s/.test(text)) {
+        hint = 'File ini tampak seperti ekspor format TXT. Minta ulang data di TikTok dan pilih format JSON.';
+      } else if (c === '<') {
+        hint = 'File ini tampak seperti halaman web (HTML). Pilih file ekspor .json atau .zip dari TikTok.';
+      } else {
+        hint = 'Pilih file .json, atau .zip yang berisi .json, dari ekspor data TikTok.';
+      }
+      throw ImportError('format-tidak-dikenali', 'Format file tidak dikenali. ' + hint);
+    }
+  }
+
+  L.Importer = Importer;
+  L.ImportError = ImportError;
+  L.serializeError = serializeError;
+  L.DEFAULT_LIMITS = DEFAULT_LIMITS;
+})(typeof globalThis !== 'undefined' ? globalThis : self);
+
+;
+/*
+ * worker-main.js — dijalankan DI DALAM Web Worker (digabung setelah modul inti saat build).
+ * Worker ini hanya membaca file yang dikirim halaman, dan membalas lewat postMessage.
+ * Ia tidak punya akses jaringan karena CSP halaman menetapkan connect-src 'none'.
+ */
+(function (self) {
+  'use strict';
+  var L = self.Lawas;
+  var importer = null;
+
+  function reply(id, type, payload) {
+    self.postMessage({ id: id, type: type, payload: payload });
+  }
+
+  self.onmessage = async function (ev) {
+    var msg = ev.data || {};
+    var id = msg.id;
+    try {
+      if (msg.type === 'load') {
+        importer = new L.Importer({
+          limits: msg.payload.limits,
+          onStatus: function (text) { reply(id, 'status', text); }
+        });
+        var res = await importer.load(msg.payload.file);
+        reply(id, 'done', res);
+      } else if (msg.type === 'extract') {
+        if (!importer) throw L.ImportError('belum-dimuat', 'Belum ada file yang dimuat.');
+        reply(id, 'done', importer.extract(msg.payload.ids));
+      } else if (msg.type === 'dispose') {
+        if (importer) importer.dispose();
+        importer = null;
+        reply(id, 'done', true);
+      } else if (msg.type === 'ping') {
+        reply(id, 'done', true);
+      }
+    } catch (e) {
+      reply(id, 'error', L.serializeError(e));
+    }
+  };
+  // Sinyal siap, agar halaman tahu worker benar-benar jalan (bukan diblokir).
+  self.postMessage({ id: 0, type: 'ready', payload: true });
+})(self);
+</script>
+</body>
+</html>
